@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Pagina Inicial
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="auth-form">
+  <ion-grid>
+    <ion-row>
+      <ion-col size = "10">
+        <ion-button  expand="block" color="primary">Registrate</ion-button> <!-- [routerLink]="['/registration']" -->
+        <span class="divider line one-line">o</span>
+        <span class="already">¿Ya eres usuario?</span>
+        <ion-button [routerLink]="['/login']" expand="block" color="danger">Inicia Sesión</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
