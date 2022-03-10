@@ -1,0 +1,7 @@
+{
+  "name": "b-book3",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

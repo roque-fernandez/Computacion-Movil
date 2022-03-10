@@ -1,9 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
-import { auth } from 'firebase/app';
+import * as firebase from 'firebase/app';
 import { User } from "./user";
 import { Router } from "@angular/router";
-import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 @Injectable({
   providedIn: 'root'
 })
@@ -60,10 +60,7 @@ export class AuthenticationService {
     const user = JSON.parse(localStorage.getItem('user'));
     return (user.emailVerified !== false) ? true : false;
   }
-  // Sign in with Gmail
-  GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
-  }
+  
   // Auth providers
   AuthLogin(provider) {
     return this.ngFireAuth.auth.signInWithPopup(provider)
