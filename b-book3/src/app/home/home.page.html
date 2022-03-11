@@ -6,10 +6,14 @@
   </ion-toolbar>
 </ion-header>
 
+<div class="bienvenido">
+  <h3>¡Bienvenido!</h3>
+</div>
+
 <ion-content class="auth-form">
-  <ion-grid>
+  <ion-grid class="wrapper">
     <ion-row>
-      <ion-col size = "10">
+      <ion-col>
         <ion-button [routerLink]="['/register']" expand="block" color="primary">Registrate</ion-button>
         <span class="divider line one-line">o</span>
         <span class="already">¿Ya eres usuario?</span>
