@@ -34,7 +34,7 @@
 
 <ion-header>
   <ion-toolbar>
-    <ion-title>Login</ion-title>
+    <ion-title>Iniciar sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -45,18 +45,18 @@
       <ion-input type="text" #email required></ion-input>
     </ion-item>
     <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
+      <ion-label position="floating">Contraseña</ion-label>
       <ion-input type="password" #password required></ion-input>
     </ion-item>
     <ion-row>
       <ion-col>
-        <ion-button type="submit" (click)="onLogin(email, password)" expand="block">Login</ion-button>
+        <ion-button type="submit" (click)="onLogin(email, password)" expand="block">Conectarse</ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
         <p class="ion-text-end">
-          <a routerLink="/forgot-password">Forgot password? </a>
+          <a routerLink="/forgot-password">¿Has olvidado la contraseña?</a>
         </p>
       </ion-col>
     </ion-row>
@@ -64,7 +64,7 @@
   <ion-row>
     <ion-col>
       <p class="ion-text-end">
-        <a routerLink="/register">Create an account </a>
+        <a routerLink="/register">Crear una cuenta</a>
       </p>
     </ion-col>
   </ion-row>
