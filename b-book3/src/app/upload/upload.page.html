@@ -1,15 +1,37 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Upload
+      Subir libro
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
-  <ion-input type="title" placeholder="Título" [(ngModel)]="usuario.email"></ion-input>
-  <ion-input type="description" placeholder="Descripción" [(ngModel)]="usuario.password"></ion-input>
+  <ion-item><ion-input type="title" placeholder="Título" [(ngModel)]="usuario.email"></ion-input></ion-item>
+  <ion-item><ion-input type="text" placeholder="Autor" [(ngModel)]="usuario.password"></ion-input></ion-item>
+  <ion-item>
+    <ion-label>Categoría</ion-label>
+    <ion-select multiple="true" cancelText="Cancelar" okText="Aceptar">
+      <ion-select-option value="bacon">Acción</ion-select-option>
+      <ion-select-option value="olives">Ciencia</ion-select-option>
+      <ion-select-option value="xcheese">Fantasía</ion-select-option>
+      <ion-select-option value="peppers">Misterio</ion-select-option>
+      <ion-select-option value="mushrooms">Terror</ion-select-option>
+      <ion-select-option value="onions">Thrillers</ion-select-option>
+      <ion-select-option value="pepperoni">Humor</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label>Estado</ion-label>
+    <ion-select multiple="false" cancelText="Cancelar" okText="Aceptar">
+      <ion-select-option value="bacon">Nuevo</ion-select-option>
+      <ion-select-option value="olives">Muy bueno</ion-select-option>
+      <ion-select-option value="xcheese">Bueno</ion-select-option>
+      <ion-select-option value="peppers">Desgastado</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-item><ion-textarea rows="6" type="description" placeholder="Descripción" [(ngModel)]="usuario.password"></ion-textarea></ion-item>
   <ion-button (click)="uploadBook()">Subir libro</ion-button>
 
 </ion-content>
