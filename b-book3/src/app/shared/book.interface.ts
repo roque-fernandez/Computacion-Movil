@@ -6,7 +6,7 @@ export interface Book {
     description: string;
     imageURL: string;
     category: string;
-    city: string;
+    region: string;
     availability: string;
     materialState: string;
   }
