@@ -1,9 +1,15 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>upload</ion-title>
+    <ion-title>
+      Upload
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
+
+  <ion-input type="title" placeholder="Título" [(ngModel)]="usuario.email"></ion-input>
+  <ion-input type="description" placeholder="Descripción" [(ngModel)]="usuario.password"></ion-input>
+  <ion-button (click)="uploadBook()">Subir libro</ion-button>
 
 </ion-content>

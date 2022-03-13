@@ -90,6 +90,7 @@ export class AuthService {
       email: user.email,
       emailVerified: user.emailVerified,
       displayName: user.displayName,
+      photoURL: user.photoURL
     };
 
     return userRef.set(data, { merge: true });
