@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../services/database.service';
+import { StorageService } from '../services/storage.service';
 import { Book } from '../shared/book.interface';
 import { User } from '../shared/user.interface';
 import { getAuth } from "firebase/auth";
 import { Router } from '@angular/router';
 
+import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
+import { AlertController } from '@ionic/angular';
 
 
 //Camara
+/*
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { AngularFireStorage } from "@angular/fire/compat/storage";
 import { AlertController } from '@ionic/angular';
@@ -15,6 +19,7 @@ import { map, finalize } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { userInfo } from 'os';
 import { UseExistingWebDriver } from 'protractor/built/driverProviders';
+*/
 
 @Component({
   selector: 'app-upload',
@@ -22,6 +27,7 @@ import { UseExistingWebDriver } from 'protractor/built/driverProviders';
   styleUrls: ['./upload.page.scss'],
 })
 export class UploadPage implements OnInit {
+  
   libro: Book = { 
     uid: null,
     userId: null,
@@ -35,12 +41,27 @@ export class UploadPage implements OnInit {
     materialState: null
   };
 
+  galleryOptions : CameraOptions = {
+    sourceType: this.camera. PictureSourceType.PHOTOLIBRARY,
+    destinationType : this.camera.DestinationType.FILE_URI,
+    quality: 100,
+    allowEdit: true,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    correctOrientation: true
+  }
+
+  newImage:any = '';
 
   //Comprobar campos necesarios *pendiente
   
-  constructor(private database: DatabaseService, private router: Router, private camera: Camera,
-    private alertCtrl: AlertController,
-    private storage: AngularFireStorage) { 
+  constructor(
+    private database: DatabaseService, 
+    private router: Router,
+    private firestorageService: StorageService,
+    private camera: Camera,
+    private alertCtrl: AlertController
+    ) { 
 
     }
 
@@ -50,9 +71,11 @@ export class UploadPage implements OnInit {
 
   //funcion que sube un libro a la base de datos
   uploadBook() {
-      const auth = getAuth();
-      const user = auth.currentUser; 
-      this.libro.userId = user.uid;
+    const auth = getAuth();
+    const user = auth.currentUser; 
+    this.libro.userId = user.uid;
+    
+
     this.database.create('books', this.libro).then(res => {
       console.log(res);
       this.router.navigate(['tab1']);
@@ -61,9 +84,58 @@ export class UploadPage implements OnInit {
     });
   }
 
+  //funcion que sube una foto de un libro al storage
+  //obtiene la url de dicha foto
+  async uploadBookPhoto(event: any){
+    
+    this.newImageShow(event);
+
+    const path = 'bookImages';
+    const name = 'prueba'
+    const file = event.target.files[0];
+
+    const url = await this.firestorageService.uploadPhoto(file,path,name);
+    console.log("URL-> ", url);
+    this.libro.imageURL = url as string;
+  }
+  
+  newImageShow(event:any){
+    if(event.target.files && event.target.files[0]){
+      const reader = new FileReader();
+      reader.onload = ((image) => {
+        this.newImage = image.target.result as string;
+      });
+      reader.readAsDataURL(event.target.files[0])
+    }
+  }
+  
+
+  /*
+  async choosePhoto(){
+    let alertBox = await this.alertCtrl.create({
+      header: 'Se abrira la galeria',
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+            this.camera.getPicture(this.galleryOptions).then(res => {
+              console.log("Resultado de escoger foto-> ",res);
+              this.photo=res;
+            })
+          }
+        }
+      ]
+    
+    })
+    await alertBox.present();       
+  }
+  */
+  
+
 
   //subir imagenes
 
+  /*
   base64Image: string;
   selectedFile: File = null;
   downloadURL: Observable<string>;
@@ -135,5 +207,6 @@ export class UploadPage implements OnInit {
     const blob = new Blob([arrayBuffer], { type: 'image/png' });
     return blob;
   }
+  */
 
 }

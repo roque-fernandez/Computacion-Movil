@@ -11,8 +11,10 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';
 
+import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
+
 //Camara e imagenes
-import { Camera } from '@ionic-native/camera/ngx';
+//import { Camera } from '@ionic-native/camera/ngx';
 
 //
 
@@ -24,7 +26,9 @@ import { Camera } from '@ionic-native/camera/ngx';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, Camera],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    Camera
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
