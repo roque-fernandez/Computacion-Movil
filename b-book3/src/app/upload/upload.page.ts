@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { AlertController } from '@ionic/angular';
 
+import { ToastController } from '@ionic/angular';
+
 
 //Camara
 /*
@@ -34,24 +36,15 @@ export class UploadPage implements OnInit {
     title: null,
     author: null,
     description: null,
-    imageURL: null,
+    imageURL: "gs://proyecto-cm-2022.appspot.com/bookDefaultImage/defaultBookImage.jpg",
     category: null,
     region: null,
     availability: "Disponible",
     materialState: null
   };
 
-  galleryOptions : CameraOptions = {
-    sourceType: this.camera. PictureSourceType.PHOTOLIBRARY,
-    destinationType : this.camera.DestinationType.FILE_URI,
-    quality: 100,
-    allowEdit: true,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE,
-    correctOrientation: true
-  }
-
-  newImage:any = '';
+  newImage:any = null;
+  
 
   //Comprobar campos necesarios *pendiente
   
@@ -60,9 +53,10 @@ export class UploadPage implements OnInit {
     private router: Router,
     private firestorageService: StorageService,
     private camera: Camera,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public toastController: ToastController
     ) { 
-
+      
     }
 
   ngOnInit() {
@@ -71,27 +65,30 @@ export class UploadPage implements OnInit {
 
   //funcion que sube un libro a la base de datos
   uploadBook() {
-    const auth = getAuth();
-    const user = auth.currentUser; 
-    this.libro.userId = user.uid;
-    
+    if(this.bookReady()){
+      const user = getAuth().currentUser;
+      this.libro.userId = user.uid;
 
-    this.database.create('books', this.libro).then(res => {
-      console.log(res);
-      this.router.navigate(['tab1']);
-    }).catch(err => {
-      console.log("Error en alta de libro: ", err);
-    });
+      this.database.create('books', this.libro).then(res => {
+        console.log(res);
+        this.router.navigate(['tab1']);
+      }).catch(err => {
+        console.log("Error en alta de libro: ", err);
+      });
+    }    
   }
 
   //funcion que sube una foto de un libro al storage
   //obtiene la url de dicha foto
-  async uploadBookPhoto(event: any){
-    
+
+  async uploadBookPhoto(event: any){  
     this.newImageShow(event);
 
+    var today = new Date();
+    var date = today.getDate() + '_' + (today.getMonth()+1) + "_" + today.getFullYear() + "_" + today.getHours() + "_" + today.getMinutes() + "_" + today.getSeconds();
+
     const path = 'bookImages';
-    const name = 'prueba'
+    const name = this.libro.title + "_" + date;
     const file = event.target.files[0];
 
     const url = await this.firestorageService.uploadPhoto(file,path,name);
@@ -107,6 +104,29 @@ export class UploadPage implements OnInit {
       });
       reader.readAsDataURL(event.target.files[0])
     }
+  }
+
+  //funcion que comprueba si el libro tiene los campos necesarios
+
+  bookReady(){
+    if(!!this.libro.title && !!this.libro.author && !!this.libro.imageURL && !!this.libro.region){
+      console.log("El libro tiene los campos necesarios");
+      return true;
+    }
+    else{
+      console.log("El libro NO tiene los campos necesarios");
+      this.presentToast();
+      return false;
+    }
+      
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'El título, el autor y la región son campos necesarios para la creación',
+      duration: 2500
+    });
+    toast.present();
   }
   
 
