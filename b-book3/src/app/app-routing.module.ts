@@ -62,6 +62,14 @@ const routes: Routes = [
     path: 'book-view',
     loadChildren: () => import('./book-view/book-view.module').then( m => m.BookViewPageModule)
   },
+  {
+    path: 'edit-profile',
+    loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
+  },
+  {
+    path: 'my-books',
+    loadChildren: () => import('./my-books/my-books.module').then( m => m.MyBooksPageModule)
+  },
 
 
 

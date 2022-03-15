@@ -1,9 +1,39 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>profile</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
+  <!--
+    <ion-img class=“profile-photo” src=“gs://proyecto-cm-2022.appspot.com/bookImages/Shrek_15_3_2022_10_45_26”></ion-img>
+
+  -->
+  
+
+  <ion-item>
+    <ion-label>Aquí iría la foto de perfil</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Aquí iría el nombre del usuario</ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Aquí iría el correo del usuario</ion-label>
+  </ion-item>
+
+  <ion-item> 
+    <ion-label>Valoración</ion-label>
+    <ion-badge color="success" slot="end">4.5 / 5</ion-badge>
+  </ion-item>
+
+  <ion-button routerLink="/my-books" expand="block">Mis libros</ion-button>
+
+  <ion-button routerLink="/settings" expand="block">Ajustes</ion-button>
+ 
 </ion-content>

@@ -71,7 +71,7 @@ export class UploadPage implements OnInit {
 
       this.database.create('books', this.libro).then(res => {
         console.log(res);
-        this.router.navigate(['tab1']);
+        this.router.navigate(['my-books']);
       }).catch(err => {
         console.log("Error en alta de libro: ", err);
       });
@@ -124,7 +124,7 @@ export class UploadPage implements OnInit {
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'El título, el autor y la región son campos necesarios para la creación',
-      duration: 2500
+      duration: 2000
     });
     toast.present();
   }
