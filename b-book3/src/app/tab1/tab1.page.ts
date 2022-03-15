@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { getAuth } from "firebase/auth";
+import { User } from '../shared/user.interface';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +9,13 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  user:User = null;
+
+  constructor() {
+
+    this.user = getAuth().currentUser;
+    console.log("User en profile->",this.user);
+    console.log("Existe nombre ->",!!this.user.displayName);
+  }
 
 }

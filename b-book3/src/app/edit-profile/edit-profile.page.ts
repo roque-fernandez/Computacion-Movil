@@ -25,7 +25,7 @@ export class EditProfilePage implements OnInit {
   ) { 
     this.user = getAuth().currentUser;
     this.newImage = this.user.photoURL;
-    //console.log("Usuario en editar perfil ->",this.user);
+    console.log("Usuario en editar perfil ->",this.user);
     console.log(this.userToJSON());
   }
 
