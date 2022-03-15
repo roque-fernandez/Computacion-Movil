@@ -36,7 +36,7 @@ export class UploadPage implements OnInit {
     title: null,
     author: null,
     description: null,
-    imageURL: "gs://proyecto-cm-2022.appspot.com/bookDefaultImage/defaultBookImage.jpg",
+    imageURL: "https://firebasestorage.googleapis.com/v0/b/proyecto-cm-2022.appspot.com/o/bookDefaultImage%2FdefaultBookImage.jpg?alt=media&token=f3c6e6c5-75eb-448d-bf9d-b8b02d47f43c",
     category: null,
     region: null,
     availability: "Disponible",
@@ -44,6 +44,8 @@ export class UploadPage implements OnInit {
   };
 
   newImage:any = null;
+
+  user:User = null;
   
 
   //Comprobar campos necesarios *pendiente
@@ -56,7 +58,9 @@ export class UploadPage implements OnInit {
     private alertCtrl: AlertController,
     public toastController: ToastController
     ) { 
-      
+      this.newImage = this.libro.imageURL;
+      this.user = getAuth().currentUser;
+      console.log("Usuario en subir libro ->",this.user);
     }
 
   ngOnInit() {
@@ -66,8 +70,7 @@ export class UploadPage implements OnInit {
   //funcion que sube un libro a la base de datos
   uploadBook() {
     if(this.bookReady()){
-      const user = getAuth().currentUser;
-      this.libro.userId = user.uid;
+      this.libro.userId = this.user.uid;
 
       this.database.create('books', this.libro).then(res => {
         console.log(res);
@@ -106,6 +109,8 @@ export class UploadPage implements OnInit {
     }
   }
 
+  
+
   //funcion que comprueba si el libro tiene los campos necesarios
 
   bookReady(){
@@ -115,15 +120,15 @@ export class UploadPage implements OnInit {
     }
     else{
       console.log("El libro NO tiene los campos necesarios");
-      this.presentToast();
+      this.presentToast('El título, el autor y la región son campos necesarios para la creación');
       return false;
     }
       
   }
 
-  async presentToast() {
+  async presentToast(content) {
     const toast = await this.toastController.create({
-      message: 'El título, el autor y la región son campos necesarios para la creación',
+      message: content,
       duration: 2000
     });
     toast.present();

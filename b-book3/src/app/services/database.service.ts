@@ -39,7 +39,7 @@ export class DatabaseService {
     try {
       return await this.firestore.collection(collection).doc(id).delete();
     } catch (error) {
-      console.log("error en: getAll ", error)
+      console.log("error en: delete ", error)
     }
   }
 
@@ -48,7 +48,7 @@ export class DatabaseService {
     try {
       return await this.firestore.collection(collection).doc(id).set(dato);
     } catch (error) {
-      console.log("error en: getAll ", error)
+      console.log("error en: update ", error)
     }
   }
 

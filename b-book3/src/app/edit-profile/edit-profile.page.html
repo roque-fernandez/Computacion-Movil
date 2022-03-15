@@ -1,9 +1,42 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>edit-profile</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Editar perfil</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-item>
+    <ion-input disabled="true" type="title" [placeholder]="user.email">
+    </ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-input type="text" placeholder="Nombre" [(ngModel)]="user.displayName"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Foto de perfil</ion-label>
+    <ion-buttons slot="end">
+      <ion-button >
+        <label for="fileUpload">  
+          <ion-icon slot="icon-only" name="images"></ion-icon>
+        </label>
+        <input (change)="uploadProfilePhoto($event)" id="fileUpload" style="display: none;" type="file" accept="image/*">
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+
+  <ion-item >
+    <img [src]="newImage" width="75%" height="75%"> 
+  </ion-item>
+
+  <ion-button (click)="editProfile()" expand="block">Confirmar cambios</ion-button>
 
 </ion-content>
