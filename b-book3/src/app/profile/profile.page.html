@@ -12,7 +12,7 @@
   <!--
     <ion-img class=“profile-photo” src=“gs://proyecto-cm-2022.appspot.com/bookImages/Shrek_15_3_2022_10_45_26”></ion-img>
 
-  -->
+  
   
 
   <ion-item>
@@ -26,10 +26,34 @@
   <ion-item>
     <ion-label>Aquí iría el correo del usuario</ion-label>
   </ion-item>
+  -->
+
+  <ion-item>
+
+    <ion-text>
+
+      <h2>
+        {{user.displayName}}
+        <br>
+      </h2>
+
+      <h5> 
+        {{user.email}} 
+      </h5>
+
+    </ion-text>
+  
+  </ion-item>
+
 
   <ion-item> 
-    <ion-label>Valoración</ion-label>
+
+    <ion-label>
+      Valoración
+    </ion-label>
+
     <ion-badge color="success" slot="end">4.5 / 5</ion-badge>
+
   </ion-item>
 
   <ion-button routerLink="/edit-profile" expand="block">Editar perfil</ion-button>

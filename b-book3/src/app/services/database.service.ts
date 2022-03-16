@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { collection, doc, setDoc } from "firebase/firestore";
+import { User } from '../shared/user.interface';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,7 +23,7 @@ export class DatabaseService {
 
   async getAll(collection) {
     try {
-      return await this.firestore.collection(collection).snapshotChanges();
+      return await this.firestore.collection(collection).valueChanges();
     } catch (error) {
       console.log("error en: getAll ", error)
     }
@@ -49,6 +53,15 @@ export class DatabaseService {
       return await this.firestore.collection(collection).doc(id).set(dato);
     } catch (error) {
       console.log("error en: update ", error)
+    }
+  }
+
+  //FUNCION QUE OBTIENE LOS ELEMENTOS DE UNA COLECCION QUE PERTENECE O NO A UN USUARIO
+  async getCollectionByUserId(collection,condition,user_id) {
+    try {
+      return await this.firestore.collection(collection, ref => ref.where('userId', condition, user_id)).valueChanges();
+    } catch (error) {
+      console.log("error en: getCollectionById ", error)
     }
   }
 

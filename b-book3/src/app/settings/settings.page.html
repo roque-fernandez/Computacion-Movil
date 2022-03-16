@@ -17,12 +17,9 @@
     <ion-label> Otras opciones </ion-label>
   </ion-item>
 
-  <ion-item>
-    <ion-label> Reseteo de contraseña </ion-label>
-  </ion-item>
-
-  <ion-item>
-    <ion-label> Log out </ion-label>
-  </ion-item>
+  <ion-button color="primary" (click)="passwordReset()" expand="block">Resetear contraseña</ion-button>
+  
+  <ion-button color="danger" (click)="logOut()" expand="block">Cerrar sesión</ion-button>
+  
 
 </ion-content>
