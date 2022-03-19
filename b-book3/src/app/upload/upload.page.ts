@@ -33,6 +33,7 @@ export class UploadPage implements OnInit {
   libro: Book = { 
     uid: null,
     userId: null,
+    userDisplayName: null,
     title: null,
     author: null,
     description: null,
@@ -71,6 +72,7 @@ export class UploadPage implements OnInit {
   uploadBook() {
     if(this.bookReady()){
       this.libro.userId = this.user.uid;
+      this.libro.userDisplayName = this.user.displayName;
 
       this.database.create('books', this.libro).then(res => {
         console.log(res);
@@ -133,105 +135,5 @@ export class UploadPage implements OnInit {
     });
     toast.present();
   }
-  
-
-  /*
-  async choosePhoto(){
-    let alertBox = await this.alertCtrl.create({
-      header: 'Se abrira la galeria',
-      buttons: [
-        {
-          text: 'Aceptar',
-          handler: () => {
-            this.camera.getPicture(this.galleryOptions).then(res => {
-              console.log("Resultado de escoger foto-> ",res);
-              this.photo=res;
-            })
-          }
-        }
-      ]
-    
-    })
-    await alertBox.present();       
-  }
-  */
-  
-
-
-  //subir imagenes
-
-  /*
-  base64Image: string;
-  selectedFile: File = null;
-  downloadURL: Observable<string>;
-
-  async takePhoto(sourceType: number) {
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      sourceType
-    };
-
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      this.base64Image = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      // Handle error
-      console.error(err);
-    });
-  }
-
-  upload(): void {
-    var currentDate = Date.now();
-    const file: any = this.base64ToImage(this.base64Image);
-    const filePath = `Images/${currentDate}`;
-    const fileRef = this.storage.ref(filePath);
-
-    const task = this.storage.upload(`Images/${currentDate}`, file);
-    task.snapshotChanges()
-      .pipe(finalize(() => {
-        this.downloadURL = fileRef.getDownloadURL();
-        this.downloadURL.subscribe(downloadURL => {
-          if (downloadURL) {
-            this.showSuccesfulUploadAlert();
-          }
-          console.log(downloadURL);
-        });
-      })
-      )
-      .subscribe(url => {
-        if (url) {
-          console.log(url);
-        }
-      });
-  }
-
-  async showSuccesfulUploadAlert() {
-    const alert = await this.alertCtrl.create({
-      cssClass: 'basic-alert',
-      header: 'Uploaded',
-      subHeader: 'Image uploaded successful to Firebase storage',
-      message: 'Check Firebase storage.',
-      buttons: ['OK']
-    });
-
-    await alert.present();
-  }
-
-  base64ToImage(dataURI) {
-    const fileDate = dataURI.split(',');
-    // const mime = fileDate[0].match(/:(.*?);/)[1];
-    const byteString = atob(fileDate[1]);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([arrayBuffer], { type: 'image/png' });
-    return blob;
-  }
-  */
 
 }

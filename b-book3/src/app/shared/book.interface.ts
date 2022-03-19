@@ -1,6 +1,7 @@
 export interface Book {
     uid: string;
     userId: string;
+    userDisplayName: string;
     title: string;
     author: string;
     description: string;

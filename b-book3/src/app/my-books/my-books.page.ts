@@ -25,10 +25,7 @@ export class MyBooksPage implements OnInit {
   ) { 
     this.user = getAuth().currentUser;
     this.getUserBooks();
-    console.log(this.misLibros);
-    
-    
-    //this.printBooks();
+    this.printBooks();
   }
 
   ngOnInit() {
@@ -37,13 +34,25 @@ export class MyBooksPage implements OnInit {
   //funcion que obtiene los libros del usuario
 
   async getUserBooks(){
-    this.misLibrosSubscriber = (await this.database.getCollectionByUserId("books","==",this.user.uid)).subscribe( res => {
+    this.misLibrosSubscriber = (await this.database.getBooksByUserId("books","==",this.user.uid)).subscribe( res => {
       if(res.length){
         this.misLibros = res as Book[];
+        this.printBooks();
       }
     });
-
   }
+
+  //funcion que borra un libro del usuario
+  
+  async deleteBook(libro){
+    await this.database.delete("books",libro.uid).then(res => {
+      console.log("Libro borrado con éxito");      
+    }).catch(err => {
+      console.log("Error al borrar libro: ", err);
+    });
+  }
+
+  /*
 
   async getBooks(){
     this.misLibrosSubscriber = (await this.database.getAll("books")).subscribe( res => {
@@ -54,12 +63,14 @@ export class MyBooksPage implements OnInit {
 
   }
 
+  */
+
   //await this.database.getCollectionByUserId("books","==",this.user.uid).
 
   printBooks(){
     if(!!this.misLibros){
       this.misLibros.forEach((book) => {
-        console.log("Titulo: ",book.title, "  || UserId: ", book.userId);
+        console.log("Titulo: ",book.title, "  || UserId: ", book.userId, "  || BookId: ", book.uid, );
       });
     }
   }

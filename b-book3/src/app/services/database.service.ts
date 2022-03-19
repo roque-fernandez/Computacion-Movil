@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { collection, doc, setDoc } from "firebase/firestore";
 import { User } from '../shared/user.interface';
+import { Book } from '../shared/book.interface';
+import { map } from 'rxjs/operators';
+
 
 
 @Injectable({
@@ -60,6 +63,20 @@ export class DatabaseService {
   async getCollectionByUserId(collection,condition,user_id) {
     try {
       return await this.firestore.collection(collection, ref => ref.where('userId', condition, user_id)).valueChanges();
+    } catch (error) {
+      console.log("error en: getCollectionById ", error)
+    }
+  }
+
+  async getBooksByUserId(collection,condition,user_id) {
+    try {
+      return await this.firestore.collection(collection, ref => ref.where('userId', condition, user_id)).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const libro = a.payload.doc.data() as Book;
+          libro.uid = a.payload.doc.id;
+          return libro;
+        }))
+      );
     } catch (error) {
       console.log("error en: getCollectionById ", error)
     }
