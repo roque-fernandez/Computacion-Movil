@@ -8,6 +8,7 @@ import { MainPageRoutingModule } from './main-routing.module';
 
 import { MainPage } from './main.page';
 
+
 @NgModule({
   imports: [
     CommonModule,

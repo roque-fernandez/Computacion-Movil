@@ -46,7 +46,8 @@ export class MyBooksPage implements OnInit {
   
   async deleteBook(libro){
     await this.database.delete("books",libro.uid).then(res => {
-      console.log("Libro borrado con éxito");      
+      console.log("Libro borrado con éxito"); 
+      this.getUserBooks();     
     }).catch(err => {
       console.log("Error al borrar libro: ", err);
     });

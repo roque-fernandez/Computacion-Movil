@@ -1,9 +1,74 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>main</ion-title>
+
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+
+    <ion-title>BBook</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <!--
+
+  <ion-toolbar>
+    <ion-searchbar animated="true" placeholder="Buscar"></ion-searchbar>
+  </ion-toolbar>
+
+  -->
+
+  <ion-card *ngFor="let libro of librosBuscados">
+    <ion-card-subtitle>{{libro.userDisplayName}}</ion-card-subtitle>
+    <img [src]= libro.imageURL width="30%" height="60%"/>
+    <ion-card-header>
+      <ion-card-subtitle>Estado: {{libro.materialState}}</ion-card-subtitle>
+      <ion-card-title>{{libro.title}}</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
+
+
+  
+
+  <ion-app>
+
+    <ion-menu side="start" content-id="main-content" type="overlay">
+      <ion-content>
+        <ion-list>
+
+          <ion-item routerLink="/profile">
+            <ion-icon name="person" slot="start"></ion-icon>
+            <ion-label>Perfil</ion-label>
+          </ion-item>
+
+          <ion-item routerLink="/my-books">
+            <ion-icon name="book" slot="start"></ion-icon>
+            <ion-label>Mis libros</ion-label>
+          </ion-item>
+
+          <ion-item routerLink="/chat">
+            <ion-icon name="chatbubbles" slot="start"></ion-icon>
+            <ion-label>Chats</ion-label>
+          </ion-item>
+          
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+
+    
+    <div class="ion-page" id="main-content">  
+    </div>
+
+  </ion-app>
+
+  
+
+  <script>
+    async function openMenu() {
+      await menuController.open();
+    }
+  </script>
 
 </ion-content>
