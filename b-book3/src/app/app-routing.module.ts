@@ -70,6 +70,10 @@ const routes: Routes = [
     path: 'my-books',
     loadChildren: () => import('./my-books/my-books.module').then( m => m.MyBooksPageModule)
   },
+  {
+    path: 'chats',
+    loadChildren: () => import('./chats/chats.module').then( m => m.ChatsPageModule)
+  },
 
 
 
