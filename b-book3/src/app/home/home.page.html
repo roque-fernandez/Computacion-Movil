@@ -6,12 +6,15 @@
   </ion-toolbar>
 </ion-header>
 
-<div class="bienvenido">
-  <h3>¡Bienvenido!</h3>
-</div>
+
 
 <ion-content class="auth-form">
   <ion-grid class="wrapper">
+    <ion-row>
+      <div class="bienvenido">
+      <h3>¡Bienvenido!</h3>
+      </div>
+    </ion-row>
     <ion-row>
       <ion-col>
         <ion-button [routerLink]="['/register']" expand="block" color="primary">Registrate</ion-button>
