@@ -22,8 +22,7 @@ export class ProfilePage implements OnInit {
     private toastController: ToastController) {
 
     this.user = getAuth().currentUser;
-    console.log("User en profile->",this.user);
-    console.log("Existe nombre ->",!!this.user.displayName);
+    
     
     
   }
