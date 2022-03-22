@@ -53,6 +53,10 @@ export class MainPage implements OnInit {
     }
   }
 
+  viewDetails(){
+
+  }
+
   //FUNCION QUE DA VALORES POR DEFECTO AL USUARIO SI LE FALTA FOTO DE PERFIL O NOMBRE
 
   initializeUser(){
@@ -80,7 +84,7 @@ export class MainPage implements OnInit {
   //actualiza en firebase el usuario actual
   editProfile(){
     this.database.update('users', this.user.uid ,  JSON.parse(this.userToJSON())).then(res => {
-      console.log(res);
+      console.log("Usuario actualizado con exito -> ",res);
     }).catch(err => {
       console.log(err);
     });

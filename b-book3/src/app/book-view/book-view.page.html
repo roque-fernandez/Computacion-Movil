@@ -1,9 +1,39 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>book_view</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{book.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <ion-item >
+    <img [src]="book.imageURL" width="30%" height="60%"> 
+  </ion-item>
+
+  <ion-item>
+    <ion-text>
+      Autor: {{book.author}}
+    </ion-text> 
+  </ion-item>
+
+  <ion-item>
+    <ion-text>
+      Descripción: {{book.description}}
+    </ion-text> 
+  </ion-item>
+
+  <ion-item>
+    <ion-text>
+      Estado: {{book.materialState}}
+    </ion-text> 
+  </ion-item>
+
+  <ion-button color="success" expand="block" routerLink='/chat'>Contactar con {{ownerName}}</ion-button>
+
+  
+
 
 </ion-content>

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../shared/user.interface';
+import { Book } from '../shared/book.interface';
+import { Router } from '@angular/router';
+import { DatabaseService } from '../services/database.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-book-view',
@@ -7,9 +12,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BookViewPage implements OnInit {
 
-  constructor() { }
+  book: Book = null;
+
+  owner: User = null;
+  ownerSubscriber: Subscription;
+  
+  ownerName = null;
+
+  constructor(
+    private router: Router,
+    private database: DatabaseService
+    ) { 
+    
+    }
 
   ngOnInit() {
+    const routerState = this.router.getCurrentNavigation().extras.state;
+    this.book = routerState as Book;
+    this.getBookOwner();
+    console.log(this.book);  
+  }
+
+  async getBookOwner(){
+    this.ownerSubscriber = (await this.database.getById("users",this.book.userId)).subscribe( res => {
+      if(res){
+        this.owner = res.data() as User;
+        this.ownerName = this.owner.displayName;
+        console.log(this.owner);
+      }
+    });
   }
 
 }

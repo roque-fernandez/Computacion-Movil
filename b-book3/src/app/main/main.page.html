@@ -20,12 +20,21 @@
   -->
 
   <ion-card *ngFor="let libro of librosBuscados">
+    
     <ion-card-subtitle>{{libro.userDisplayName}}</ion-card-subtitle>
     <img [src]= libro.imageURL width="30%" height="60%"/>
+    
     <ion-card-header>
       <ion-card-subtitle>Estado: {{libro.materialState}}</ion-card-subtitle>
       <ion-card-title>{{libro.title}}</ion-card-title>
     </ion-card-header>
+
+    <ion-item>
+      <ion-button routerLink='/book-view' [state]=libro fill="clear">
+        <ion-icon slot="icon-only" name="play"></ion-icon>
+      </ion-button>
+    </ion-item>
+
   </ion-card>
 
 
