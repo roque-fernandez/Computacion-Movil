@@ -25,6 +25,7 @@
     <ion-label>Categoría</ion-label>
     <ion-select multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="libro.category">
       <ion-select-option value="Novela">Novela</ion-select-option>
+      <ion-select-option value="Poesía">Poesía</ion-select-option>
       <ion-select-option value="Teatro">Teatro</ion-select-option>
       <ion-select-option value="Ensayo">Ensayo</ion-select-option>
       <ion-select-option value="Revista">Revista</ion-select-option>
@@ -50,7 +51,7 @@
   <ion-item>
     <ion-label>Región</ion-label>
     <ion-select multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="libro.region">
-      <ion-select-option value="Andalucia">Andalucía</ion-select-option>
+      <ion-select-option value="Andalucía">Andalucía</ion-select-option>
       <ion-select-option value="Aragón">Aragón</ion-select-option>
       <ion-select-option value="Asturias">Asturias</ion-select-option>
       <ion-select-option value="Cantabria">Cantabria</ion-select-option>

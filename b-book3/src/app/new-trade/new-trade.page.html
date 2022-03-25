@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Intercambio</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-text>
+      {{otherUserName}} ofrece {{otherUserBook.title}}
+    </ion-text> 
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      {{user.displayName}} ofrece 
+    </ion-label>
+    <ion-select interface="popover" multiple="false" cancelText="Cancelar" okText="Ok" [(ngModel)]="mySelectedBook" (ionChange)="printSelectedBook()">
+      <ion-select-option *ngFor="let libro of myBooks" [value]=libro>{{libro.title}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-textarea rows="3" type="description" placeholder="Dirección" [(ngModel)]="trade.meet_point">
+    </ion-textarea>
+  </ion-item>
+
+  
+  <ion-item>
+    <ion-label>
+      Fecha de préstamo 
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    
+    <ion-datetime></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      Fecha de devolución
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    
+    <ion-datetime></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+
+  </ion-item>
+
+  <ion-button color="success" (click)="uploadTrade()" expand="block">Confirmar intercambio</ion-button>
+
+  
+
+</ion-content>

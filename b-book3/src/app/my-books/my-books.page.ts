@@ -34,7 +34,7 @@ export class MyBooksPage implements OnInit {
   //funcion que obtiene los libros del usuario
 
   async getUserBooks(){
-    this.misLibrosSubscriber = (await this.database.getBooksByUserId("books","==",this.user.uid)).subscribe( res => {
+    this.misLibrosSubscriber = (await this.database.getBooksByUserId(this.user.uid)).subscribe( res => {
       if(res.length){
         this.misLibros = res as Book[];
         this.printBooks();
@@ -52,21 +52,6 @@ export class MyBooksPage implements OnInit {
       console.log("Error al borrar libro: ", err);
     });
   }
-
-  /*
-
-  async getBooks(){
-    this.misLibrosSubscriber = (await this.database.getAll("books")).subscribe( res => {
-      if(res.length){
-        this.misLibros = res as Book[];
-      }
-    });
-
-  }
-
-  */
-
-  //await this.database.getCollectionByUserId("books","==",this.user.uid).
 
   printBooks(){
     if(!!this.misLibros){

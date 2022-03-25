@@ -21,14 +21,19 @@ export class MainPage implements OnInit {
 
   librosBuscadosSubscriber: Subscription;
 
+  //variable para saber si a un usuario hay que asignarle un nombre o foto por defecto
   flagActualizacion = false;
+
+  //parametros de la busqueda
+  region = "Andalucía";
+  categoria = "Novela";
 
   constructor(private menu: MenuController,
     private database: DatabaseService,
     private router: Router) { 
       this.user = getAuth().currentUser;
       console.log("User en MAIN->",this.user);
-      console.log("Existe nombre ->",!!this.user.displayName);
+      console.log("Existe nombre ->",this.user.displayName != null);
       this.initializeUser();
       this.getSearch();
       this.printBooks();
@@ -38,9 +43,10 @@ export class MainPage implements OnInit {
   }
 
   async getSearch(){
-    this.librosBuscadosSubscriber = (await this.database.getBooksByUserId("books","!=",this.user.uid)).subscribe( res => {
+    this.librosBuscadosSubscriber = (await this.database.getOtherUsersBooks(this.user.uid,this.region,this.categoria)).subscribe( res => {
       if(res.length){
         this.librosBuscados = res as Book[];
+        console.log("Busqueda ejecutada con Region: ", this.region, " y Categoria: ",this.categoria);
       }
     });
   }
@@ -61,14 +67,14 @@ export class MainPage implements OnInit {
 
   initializeUser(){
     //si el usuario no tiene foto se le asigna una por defecto
-    if(!!this.user.photoURL === false){
-      console.log("Falta la foto de perfil")
+    if(this.user.photoURL === null){
       this.user.photoURL = "https://firebasestorage.googleapis.com/v0/b/proyecto-cm-2022.appspot.com/o/profileDefaultImage%2Fuser-default-image.jpg?alt=media&token=384b0ce0-87d5-40ec-ae66-6e54c0bfbaab";
       this.flagActualizacion = true;
+      console.log("Se ha asignado foto de perfil por defecto");
     }
 
     //si el usuario no tiene foto se le asigna una por defecto
-    if(!!this.user.displayName === false){
+    if(this.user.displayName === null){
       var emailSeparado = this.user.email.split('@');
       this.user.displayName = emailSeparado[0];
       this.flagActualizacion = true;

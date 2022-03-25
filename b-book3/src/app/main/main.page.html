@@ -13,33 +13,51 @@
 
   <!--
 
-  <ion-toolbar>
-    <ion-searchbar animated="true" placeholder="Buscar"></ion-searchbar>
-  </ion-toolbar>
+  <ion-item>
 
-  -->
+    <ion-label>Región</ion-label>
+    <ion-select (ionChange)="getSearch()" multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="region">
+      <ion-select-option value="Andalucía">Andalucía</ion-select-option>
+      <ion-select-option value="Aragón">Aragón</ion-select-option>
+      <ion-select-option value="Asturias">Asturias</ion-select-option>
+      <ion-select-option value="Cantabria">Cantabria</ion-select-option>
+      <ion-select-option value="Castilla - La Mancha">Castilla - La Mancha</ion-select-option>
+      <ion-select-option value="Castilla y León">Melilla</ion-select-option>
+      <ion-select-option value="Cataluña">Cataluña</ion-select-option>
+      <ion-select-option value="Ceuta">Ceuta</ion-select-option>
+      <ion-select-option value="Extremadura">Extremadura</ion-select-option>
+      <ion-select-option value="Galicia">Galicia</ion-select-option>
+      <ion-select-option value="Islas Baleares">Islas Baleares</ion-select-option>
+      <ion-select-option value="Islas Canarias">Islas Canarias</ion-select-option>
+      <ion-select-option value="La Rioja">La Rioja</ion-select-option>
+      <ion-select-option value="Madrid">Madrid</ion-select-option>
+      <ion-select-option value="Melilla">Melilla</ion-select-option>
+      <ion-select-option value="Murcia">Murcia</ion-select-option>
+      <ion-select-option value="Navarra">Navarra</ion-select-option>
+      <ion-select-option value="País Vasco">País Vasco</ion-select-option>
+      <ion-select-option value="Valencia">Valencia</ion-select-option>
+    </ion-select>
+  
+  </ion-item>
 
-  <ion-card *ngFor="let libro of librosBuscados">
-    
-    <ion-card-subtitle>{{libro.userDisplayName}}</ion-card-subtitle>
-    <img [src]= libro.imageURL width="30%" height="60%"/>
-    
-    <ion-card-header>
-      <ion-card-subtitle>Estado: {{libro.materialState}}</ion-card-subtitle>
-      <ion-card-title>{{libro.title}}</ion-card-title>
-    </ion-card-header>
+ 
 
-    <ion-item>
-      <ion-button routerLink='/book-view' [state]=libro fill="clear">
-        <ion-icon slot="icon-only" name="play"></ion-icon>
-      </ion-button>
-    </ion-item>
+  <ion-item>
+    <ion-label>Categoría</ion-label>
+    <ion-select (ionChange)="getSearch()" multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="categoria">
+      <ion-select-option value="Novela">Novela</ion-select-option>
+      <ion-select-option value="Poesía">Poesía</ion-select-option>
+      <ion-select-option value="Teatro">Teatro</ion-select-option>
+      <ion-select-option value="Ensayo">Ensayo</ion-select-option>
+      <ion-select-option value="Revista">Revista</ion-select-option>
+      <ion-select-option value="Infantil">Infantil</ion-select-option>
+    </ion-select>
+  </ion-item>
 
-  </ion-card>
-
-
+-->
 
   
+
 
   <ion-app>
 
@@ -61,6 +79,11 @@
             <ion-icon name="chatbubbles" slot="start"></ion-icon>
             <ion-label>Chats</ion-label>
           </ion-item>
+
+          <ion-item routerLink="/trades">
+            <ion-icon name="git-compare" slot="start"></ion-icon>
+            <ion-label>Intercambios</ion-label>
+          </ion-item>
           
         </ion-list>
       </ion-content>
@@ -68,6 +91,31 @@
 
     
     <div class="ion-page" id="main-content">  
+
+      <ion-content
+        [scrollEvents]="true"
+        >
+
+        <ion-card *ngFor="let libro of librosBuscados">
+    
+          <ion-card-subtitle>{{libro.userDisplayName}}</ion-card-subtitle>
+          <img [src]= libro.imageURL width="30%" height="60%"/>
+          
+          <ion-card-header>
+            <ion-card-subtitle>Estado: {{libro.materialState}}</ion-card-subtitle>
+            <ion-card-title>{{libro.title}}</ion-card-title>
+          </ion-card-header>
+      
+          <ion-item>
+            <ion-button routerLink='/book-view' [state]=libro fill="clear" slot="end">
+              <ion-icon slot="icon-only" name="play"></ion-icon>
+            </ion-button>
+          </ion-item>
+      
+        </ion-card>
+          
+      </ion-content>
+
     </div>
 
   </ion-app>

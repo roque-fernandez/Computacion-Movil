@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 
+
 //Camara e imagenes
 //import { Camera } from '@ionic-native/camera/ngx';
 

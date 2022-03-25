@@ -14,6 +14,8 @@ export class ProfilePage implements OnInit {
 
   user:User = null;
 
+  fotoPerfil = null;
+
   flagActualizacion = false;
 
   constructor(
@@ -22,6 +24,7 @@ export class ProfilePage implements OnInit {
     private toastController: ToastController) {
 
     this.user = getAuth().currentUser;
+    this.fotoPerfil = this.user.photoURL;
     
     
     

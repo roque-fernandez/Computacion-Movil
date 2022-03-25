@@ -68,9 +68,37 @@ export class DatabaseService {
     }
   }
 
-  async getBooksByUserId(collection,condition,user_id) {
+  async getBooksByUserId(user_id) {
     try {
-      return await this.firestore.collection(collection, ref => ref.where('userId', condition, user_id)).snapshotChanges().pipe(
+      return await this.firestore.collection('books', ref => ref.where('userId', '==', user_id)).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const libro = a.payload.doc.data() as Book;
+          libro.uid = a.payload.doc.id;
+          return libro;
+        }))
+      );
+    } catch (error) {
+      console.log("error en: getCollectionById ", error)
+    }
+  }
+
+  async getOtherUsersBooks(user_id,region,categoria) {
+    try {
+      return await this.firestore.collection('books', ref => ref.where('userId', '!=', user_id).where('region','==',region).where('category','==',categoria)).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const libro = a.payload.doc.data() as Book;
+          libro.uid = a.payload.doc.id;
+          return libro;
+        }))
+      );
+    } catch (error) {
+      console.log("error en: getCollectionById ", error)
+    }
+  }
+
+  async getUserAvailableBooks(user_id) {
+    try {
+      return await this.firestore.collection('books', ref => ref.where('userId', '==', user_id).where('availability','==',"Disponible")).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const libro = a.payload.doc.data() as Book;
           libro.uid = a.payload.doc.id;
