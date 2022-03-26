@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { collection, doc, setDoc } from "firebase/firestore";
-import { User } from '../shared/user.interface';
 import { Book } from '../shared/book.interface';
+import { Trade } from '../shared/trade.interface';
 import { map } from 'rxjs/operators';
 
 
@@ -68,6 +67,7 @@ export class DatabaseService {
     }
   }
 
+  //FUNCION QUE OBTIENE TODOS LOS LIBROS DE UN USUARIO
   async getBooksByUserId(user_id) {
     try {
       return await this.firestore.collection('books', ref => ref.where('userId', '==', user_id)).snapshotChanges().pipe(
@@ -82,6 +82,7 @@ export class DatabaseService {
     }
   }
 
+  //FUNCION QUE OBTIENE LOS LIBROS DE OTROS USUARIOS FILTRANDO POR REGION Y CATEGORIA
   async getOtherUsersBooks(user_id,region,categoria) {
     try {
       return await this.firestore.collection('books', ref => ref.where('userId', '!=', user_id).where('region','==',region).where('category','==',categoria).where('availability','==','Disponible')).snapshotChanges().pipe(
@@ -96,6 +97,7 @@ export class DatabaseService {
     }
   }
 
+  //FUNCION QUE OBTIENE LOS LIBROS DISPONIBLES DEL USUARIO
   async getUserAvailableBooks(user_id) {
     try {
       return await this.firestore.collection('books', ref => ref.where('userId', '==', user_id).where('availability','==',"Disponible")).snapshotChanges().pipe(
@@ -109,6 +111,24 @@ export class DatabaseService {
       console.log("error en: getCollectionById ", error)
     }
   }
+
+  async getRequests(user_id) {
+    try {
+      var date = new Date();
+
+      return await this.firestore.collection('trades', ref => ref.where('idUser2', '==', user_id).where('state','==','Pendiente')).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const trade = a.payload.doc.data() as Trade;
+          trade.uid = a.payload.doc.id;
+          return trade;
+        }))
+      );
+    } catch (error) {
+      console.log("error en: getCollectionById ", error)
+    }
+  }
+
+  //.where('loan_date','>',date)
 
 
 }

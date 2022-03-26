@@ -82,6 +82,10 @@ const routes: Routes = [
     path: 'new-trade',
     loadChildren: () => import('./new-trade/new-trade.module').then( m => m.NewTradePageModule)
   },
+  {
+    path: 'trade-requests',
+    loadChildren: () => import('./trade-requests/trade-requests.module').then( m => m.TradeRequestsPageModule)
+  },
 
 
 
