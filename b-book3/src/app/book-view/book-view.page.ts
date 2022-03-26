@@ -18,6 +18,7 @@ export class BookViewPage implements OnInit {
   ownerSubscriber: Subscription;
   
   ownerName = null;
+  description = "Sin descripción";
 
   constructor(
     private router: Router,
@@ -30,7 +31,10 @@ export class BookViewPage implements OnInit {
     const routerState = this.router.getCurrentNavigation().extras.state;
     this.book = routerState as Book;
     this.getBookOwner();
-    console.log(this.book);  
+    console.log(this.book);
+    if(!!this.book.description){
+      this.description = this.book.description;
+    }  
   }
 
   async getBookOwner(){

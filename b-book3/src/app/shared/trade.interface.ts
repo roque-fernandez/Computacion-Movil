@@ -8,5 +8,4 @@ export interface Trade {
     loan_date: Date;
     return_date: Date;
     state: string;
-
 }

@@ -6,6 +6,8 @@ import { Trade } from '../shared/trade.interface';
 import { DatabaseService } from '../services/database.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ToastController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-new-trade',
@@ -43,7 +45,8 @@ export class NewTradePage implements OnInit {
 
   constructor(
     private database: DatabaseService,
-    private router: Router
+    private router: Router,
+    public toastController: ToastController
   ) {
     const routerState = this.router.getCurrentNavigation().extras.state;
     this.user = getAuth().currentUser;
@@ -58,6 +61,51 @@ export class NewTradePage implements OnInit {
   }
 
   //FUNCIONES PROPIAS DEL INTERCAMBIO
+
+  async uploadTrade(){
+    this.trade.idUser1 = this.user.uid;
+    this.trade.idBook1 = this.mySelectedBook.uid;
+    this.trade.idUser2 = this.otherUser.uid;
+    this.trade.idBook2 = this.otherUserBook.uid;
+
+    if (this.tradeReady()){
+
+      //se crea la entrada en la tabla de trades
+      this.database.create('trades', this.trade).then(res => {
+        console.log("Exito en alta de intercambio");
+
+        //se modifica de los dos libros a prestado
+        this.mySelectedBook.availability = "Prestado";
+        this.updateBook(this.mySelectedBook);
+        this.otherUserBook.availability = "Prestado";
+        this.updateBook(this.otherUserBook);
+
+        this.router.navigate(['main']);
+
+      }).catch(err => {
+        console.log("Error en alta de intercambio: ", err);
+      });
+    }
+  }
+
+  tradeReady(){
+    if(!!this.trade.idBook1 && 
+      !!this.trade.idBook2 &&
+      !!this.trade.meet_point && 
+      !!this.trade.loan_date && 
+      !!this.trade.return_date){
+      console.log("El intercambio tiene los campos necesarios");
+      console.log(this.trade);
+      return true;
+    }
+    else{
+      console.log("El intercambio NO tiene los campos necesarios");
+      console.log(this.trade);
+      this.presentToast('Faltan cambios del intercambio por elegir');
+      return false;
+    }
+      
+  }
 
   //FUNCIONES DE LIBROS
 
@@ -80,6 +128,14 @@ export class NewTradePage implements OnInit {
     });
   }
 
+  async updateBook(book:Book){
+    this.database.update('books', book.uid ,  JSON.parse(this.bookToJSON(book))).then(res => {
+      console.log("Exito actualizando libro");
+    }).catch(err => {
+      console.log("Fallo actualizando libro");
+    });
+  }
+
   printBooks(){
     if(!!this.myBooks){
       this.myBooks.forEach((book) => {
@@ -90,6 +146,30 @@ export class NewTradePage implements OnInit {
 
   printSelectedBook(){
     console.log(this.user.displayName, " ha seleccionado: ",this.mySelectedBook);
+  }
+
+  bookToJSON(book:Book){
+    var res = '{ "uid": ' + '"' + book.uid + '"' 
+    + ', "userId":'  + '"' + book.userId + '"' 
+    + ', "userDisplayName": ' + '"' + book.userDisplayName + '"' 
+    + ', "title":' + '"' + book.title + '"' 
+    + ', "author":'  + '"' + book.author + '"' 
+    + ', "description":'  + '"' + book.description + '"'
+    + ', "imageURL":'  + '"' + book.imageURL + '"'
+    + ', "category":'  + '"' + book.category + '"'
+    + ', "region":'  + '"' + book.region + '"'
+    + ', "availability":'  + '"' + book.availability + '"'
+    + ', "materialState":'  + '"' + book.materialState + '"'
+    + "}";
+    return res;
+  }
+
+  async presentToast(content) {
+    const toast = await this.toastController.create({
+      message: content,
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

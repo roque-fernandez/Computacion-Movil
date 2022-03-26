@@ -84,7 +84,7 @@ export class DatabaseService {
 
   async getOtherUsersBooks(user_id,region,categoria) {
     try {
-      return await this.firestore.collection('books', ref => ref.where('userId', '!=', user_id).where('region','==',region).where('category','==',categoria)).snapshotChanges().pipe(
+      return await this.firestore.collection('books', ref => ref.where('userId', '!=', user_id).where('region','==',region).where('category','==',categoria).where('availability','==','Disponible')).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const libro = a.payload.doc.data() as Book;
           libro.uid = a.payload.doc.id;
