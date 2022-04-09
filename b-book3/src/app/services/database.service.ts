@@ -112,7 +112,7 @@ export class DatabaseService {
     }
   }
 
-  async getRequests(user_id) {
+  async getTrades(user_id) {
     try {
       var date = new Date();
 
