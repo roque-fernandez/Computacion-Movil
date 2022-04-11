@@ -7,6 +7,8 @@ import { Request } from '../shared/request.interface';
 import { DatabaseService } from '../services/database.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ToastController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-trade-requests',
@@ -25,7 +27,8 @@ export class TradeRequestsPage implements OnInit {
 
   constructor(
     private database: DatabaseService,
-    private router: Router
+    private router: Router,
+    private toastController: ToastController
   ) { 
     this.user = getAuth().currentUser;
     this.getTrades();
@@ -36,20 +39,30 @@ export class TradeRequestsPage implements OnInit {
   }
 
   async getTrades(){
-    this.tradeSubscriber = (await this.database.getTrades(this.user.uid)).subscribe( res => {
+    this.tradeSubscriber = (await this.database.getTradeRequests(this.user.uid)).subscribe( res => {
       if(res.length){
         this.trades = res as Trade[];
         console.log("Se han obtenido las solicitudes de intercambio: ",this.trades);
+        this.getRequests();
       }
     });
-    console.log("Al final de la funcion: ", this.trades);
   }
 
   async getRequests(){
     this.trades.forEach( async (trade) => {
       console.log("Trade en getRequests: ",trade);
-      var request: Request;
-      /*
+      var request:Request = {
+        uid: '',
+        user1: null,
+        user2: null,
+        book1: null,
+        book2: null,
+        meet_point: '',
+        loan_date: null,
+        return_date: null,
+        state: ''
+      };
+      
       //obtenemos los libros
       this.requestSubscriber = (await this.database.getById("books",trade.idBook1)).subscribe(res => {
         if(res){
@@ -84,13 +97,54 @@ export class TradeRequestsPage implements OnInit {
       
 
       this.requests.push(request);
-      */
+      
     });
-    console.log("Se han obtenido las siguientes solicitudes: ",this.requests);
+    console.log("Se han obtenido las siguientes Requests: ",this.requests);
   }
+
+  
+  async acceptRequest(request){
+    var result = this.trades.filter(trade =>
+      trade.uid == request.uid
+    );
+    if(result.length > 0){
+      result[0].state = "Aceptado";
+
+      this.database.update('trades', result[0].uid ,  JSON.parse(this.tradeToJSON(result[0]))).then(res => {
+        this.presentToast("Solicitud de intercambio aceptada");
+        this.router.navigate(['trades']);
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+  }
+
+  async presentToast(content) {
+    const toast = await this.toastController.create({
+      message: content,
+      duration: 2000
+    });
+    toast.present();
+  }
+  
 
   printTrades(){
     console.log("TRADES ->",this.trades);
+  }
+
+  tradeToJSON(trade){
+    var res = '{ "uid": ' + '"' + trade.uid + '"' 
+    + ', "idUser1":'  + '"' + trade.idUser1 + '"' 
+    + ', "idUser2": ' + '"' + trade.idUser2 + '"' 
+    + ', "idBook1":' + '"' + trade.idBook1 + '"' 
+    + ', "idBook2":'  + '"' + trade.idBook2 + '"' 
+    + ', "meet_point":'  + '"' + trade.meet_point + '"'
+    + ', "loan_date":'  + '"' +  trade.loan_date + '"'
+    + ', "return_date":'  + '"' +  trade.return_date + '"'
+    + ', "state":'  + '"' + trade.state + '"'
+    + "}";
+    //console.log(res);
+    return res;
   }
 
 }

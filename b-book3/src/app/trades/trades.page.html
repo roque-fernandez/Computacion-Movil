@@ -11,5 +11,21 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="printTrades()" expand="block">imprimir trades</ion-button>
+
+  <ion-card *ngFor="let request of requests">
+
+    <ion-card-header>
+      <ion-card-title>{{request.user1.displayName}} me cambia {{request.book1.title}}</ion-card-title>
+      <ion-card-title>por {{request.book2.title}}</ion-card-title>
+    </ion-card-header>
+    
+    <ion-card-subtitle>En {{request.meet_point}} el {{request.loan_date}}</ion-card-subtitle>
+    <ion-card-subtitle>Devolución: {{request.return_date}}</ion-card-subtitle>
+    <ion-card-subtitle>Estado: {{request.state}}</ion-card-subtitle>
+
+
+    <img [src]= request.book1.imageURL width="30%" height="60%"/>
+
+  </ion-card>
+
 </ion-content>

@@ -7,7 +7,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content> 
+<ion-content>
+  <!--
   <ion-button (click)="printTrades()" expand="block">imprimir trades</ion-button>
   <ion-button (click)="getRequests()" expand="block">obtener requests</ion-button>
+  --> 
+
+  <ion-card *ngFor="let request of requests">
+
+    <ion-card-header>
+      <ion-card-title>{{request.user1.displayName}} me ofrece: {{request.book1.title}}</ion-card-title>
+      <ion-card-title>Yo doy {{request.book2.title}}</ion-card-title>
+    </ion-card-header>
+    
+    <ion-card-subtitle>En {{request.meet_point}} el {{request.loan_date}}</ion-card-subtitle>
+    <ion-card-subtitle>Devolución: {{request.return_date}}</ion-card-subtitle>
+
+    <img [src]= request.book1.imageURL width="30%" height="60%"/>
+    
+    
+
+    <ion-item>
+      <ion-button (click)="acceptRequest(request)" fill="clear" slot="end">
+        <ion-icon slot="icon-only" name="checkmark-circle"></ion-icon>
+      </ion-button>
+    </ion-item>
+
+  </ion-card>
+
 </ion-content>

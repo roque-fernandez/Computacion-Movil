@@ -112,7 +112,7 @@ export class DatabaseService {
     }
   }
 
-  async getTrades(user_id) {
+  async getTradeRequests(user_id) {
     try {
       var date = new Date();
 
@@ -128,7 +128,22 @@ export class DatabaseService {
     }
   }
 
-  //.where('loan_date','>',date)
+  async getTrades(user_id) {
+    try {
+      var date = new Date();
+
+      return await this.firestore.collection('trades', ref => ref.where('idUser2', '==', user_id).where('state','!=','Pendiente')).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const trade = a.payload.doc.data() as Trade;
+          trade.uid = a.payload.doc.id;
+          return trade;
+        }))
+      );
+    } catch (error) {
+      console.log("error en: getCollectionById ", error)
+    }
+  }
+
 
 
 }
