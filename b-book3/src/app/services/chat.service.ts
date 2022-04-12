@@ -1,23 +1,15 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
+import { User } from '../shared/user.interface';
+import { Book } from '../shared/book.interface';
+import { Message } from '../shared/message.interface';
+import { Router } from '@angular/router';
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import * as firebase from "firebase/compat/app";
 import { Observable } from "rxjs";
 import { map, switchMap } from "rxjs/operators";
-
-export interface User{
-    uid: string;
-    email: string;
-}
-
-export interface Message {
-    createdAt: firebase.default.firestore.FieldValue;
-    id: string;
-    from: string;
-    msg: string;
-    fromName: string;
-    myMsg: boolean;
-}
+import { Subscription } from 'rxjs';
+import { DatabaseService } from '../services/database.service';
 
 
 @Injectable({
@@ -25,19 +17,38 @@ export interface Message {
 })
 
 export class ChatService{
+    
     currentUser: User = null;
+    otherUser: User = null;
 
-    constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore) {
+    otherUserBook: Book = null;
+
+    otherUserSubscriber: Subscription;
+    otherUserName = null;
+
+    constructor(private afAuth: AngularFireAuth, 
+        private afs: AngularFirestore, 
+        private database: DatabaseService, 
+        private router: Router)  {
         this.afAuth.onAuthStateChanged( user => {
             console.log('Changed: ', user);
             this.currentUser = user;
         })
+        const routerState = this.router.getCurrentNavigation().extras.state;
+        this.otherUserBook = routerState as Book;
+        this.getBookOwner();
+        console.log(this.otherUserBook);
+        
      }
+
+
+
 
      addChatMessage(msg) {
          return this.afs.collection('messages').add({
              msg,
              from: this.currentUser.uid,
+             //to: this.otherUser.uid,
              createdAt: firebase.default.firestore.FieldValue.serverTimestamp()
          })
      }
@@ -67,6 +78,7 @@ export class ChatService{
              map(messages => {
                  for(let m of messages) {
                     m.fromName = this.getUserForMsg(m.from, users);
+                    m.to = this.getUserForMsg(m.to, users);
                     m.myMsg = this.currentUser.uid === m.from;
                  }
                  console.log('all messages: ', messages);
@@ -75,5 +87,38 @@ export class ChatService{
          )
      }
 
+
+
+     //Mensajes Filtrados por usuario actual y destino
+
+     getUserMessages(currentUser,OtherUser){
+         let messages = this.getChatMessages();     
+         let messagesF;
+         return messages.pipe(
+            map(messages => {
+                for(let m of messages) {
+                  if((m.from == currentUser && m.to == OtherUser) ||
+                        ((m.from == OtherUser && m.to == currentUser))){
+                        messagesF.add(m);
+                  }
+                }
+                console.log('mensajesFiltrados: ', messagesF);
+                return messagesF;
+            })
+         )
+
+     }
+
+     async getBookOwner(){
+        this.otherUserSubscriber = (await this.database.getById("users",this.otherUserBook.userId)).subscribe( res => {
+          if(res){
+            this.otherUser = res.data() as User;
+            this.otherUserName = this.otherUser.displayName;
+            console.log(this.otherUser);
+          }
+        });
+      }
+    
+      
 }
 

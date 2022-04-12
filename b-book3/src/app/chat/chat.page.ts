@@ -1,8 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChatService, Message } from '../services/chat.service';
+import { ChatService } from '../services/chat.service';
+import { User } from '../shared/user.interface';
+import { Book } from '../shared/book.interface';
+import { Message } from '../shared/message.interface';
 import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-chat',
@@ -14,9 +19,15 @@ export class ChatPage implements OnInit {
 
   messages: Observable<Message[]>;
   newMsg = '';
+  otherUser: User = null;
 
+  otherUserBook: Book = null;
+  otherUserSubscriber: Subscription;
+  otherUserName = null;
 
-  constructor(private chatService: ChatService, private router: Router) { }
+  constructor(private chatService: ChatService, private router: Router, private database: DatabaseService) { 
+    const routerState = this.router.getCurrentNavigation().extras.state;
+  }
 
   ngOnInit() {
     this.messages = this.chatService.getChatMessages();
@@ -29,5 +40,15 @@ export class ChatPage implements OnInit {
     });
   }
 
-
+  /*
+  async getBookOwner(){
+    this.otherUserSubscriber = (await this.database.getById("users",this.otherUserBook.userId)).subscribe( res => {
+      if(res){
+        this.otherUser = res.data() as User;
+        this.otherUserName = this.otherUser.displayName;
+        console.log(this.otherUser);
+      }
+    });
+  }
+  */  
 }

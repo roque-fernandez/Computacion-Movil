@@ -86,6 +86,10 @@ const routes: Routes = [
     path: 'trade-requests',
     loadChildren: () => import('./trade-requests/trade-requests.module').then( m => m.TradeRequestsPageModule)
   },
+  {
+    path: 'new-chat',
+    loadChildren: () => import('./new-chat/new-chat.module').then( m => m.NewChatPageModule)
+  },
 
 
 
