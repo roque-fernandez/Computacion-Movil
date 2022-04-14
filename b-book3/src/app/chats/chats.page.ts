@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { userInfo } from 'os';
 import { UseExistingWebDriver } from 'protractor/built/driverProviders';
-import { ChatService } from '../services/chat.service';
 import { Message } from '../shared/message.interface';
 import { ChatPage } from '../chat/chat.page';
 import { User } from '../shared/user.interface';
@@ -16,7 +15,6 @@ import { getAuth } from 'firebase/auth';
 export class ChatsPage implements OnInit {
   user:User = null;
   mensajes: Message[] = [];
-  chats: ChatService[] = [];
   usuarios: User[] = [];
   private database: DatabaseService;
 
