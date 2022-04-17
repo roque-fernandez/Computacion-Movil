@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../shared/user.interface';
-import { Book } from '../shared/book.interface';
 import { Message } from '../shared/message.interface';
 import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { Subscription } from 'rxjs';
 import { DatabaseService } from '../services/database.service';
 import { map, switchMap } from "rxjs/operators";
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -22,25 +20,21 @@ export class ChatPage implements OnInit {
 
   messages: Observable<Message[]>;
   newMsg = '';
-  listaDeUsuarios = [];
 
   currentUser: User = null;
-  otherUser: User = null;
 
-  otherUserBook: Book = null;
-  otherUserSubscriber: Subscription;
-  otherUserName = null;
+  otherUserId = null;
 
   constructor(private router: Router, private database: DatabaseService, private afs: AngularFirestore) { 
     const routerState = this.router.getCurrentNavigation().extras.state;
+    console.log(routerState.userId);
     this.currentUser = getAuth().currentUser;
-    this.otherUserBook = routerState as Book;
-    this.getBookOwner();
-    console.log(this.otherUserBook.userId);
+    this.otherUserId = routerState.userId || routerState.uid;
+    console.log(this.otherUserId);
   }
 
   ngOnInit() {
-    this.messages = this.getChatMessages(this.currentUser.uid,this.otherUserBook.userId);
+    this.messages = this.getChatMessages(this.currentUser.uid,this.otherUserId);
   }
 
   //FUNCION PARA AÑADIR UN MENSAJE AL CHAT
@@ -58,7 +52,7 @@ export class ChatPage implements OnInit {
     return this.afs.collection('messages').add({
         msg,
         from: this.currentUser.uid,
-        to: this.otherUser.uid,
+        to: this.otherUserId,
         createdAt: firebase.default.firestore.FieldValue.serverTimestamp()
     })
 }
@@ -106,17 +100,7 @@ getChatMessages(currentUserId,otherUserId) {
   )
 }
 
-//FUNCION PARA OBTENER EL USERID DEL USUARIO QUE OFERTA EL LIBRO
 
-  async getBookOwner(){
-    this.otherUserSubscriber = (await this.database.getById("users",this.otherUserBook.userId)).subscribe( res => {
-      if(res){
-        this.otherUser = res.data() as User;
-        this.otherUserName = this.otherUser.displayName;
-        console.log(this.otherUser);
-      }
-    });
-  }
 
 
 }

@@ -7,15 +7,19 @@
     <ion-title>Chats</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<!-- Lista de chats -->
 <ion-content>
-  <ion-list *ngFor="let user of users">
-    <ion-item>
-      <ion-label>
-        {{ user.userDisplayName}}
-      </ion-label>
+  <!-- Lista de chats -->
+  <ion-list>
+
+    <ion-item *ngFor="let usuario of usuarios | async"> 
+      <ion-avatar class="avatar">
+        <img [src]="usuario.photoURL" width="10%" height="10%"> 
+      </ion-avatar>
+      <ion-label class="label" routerLink="/chat" [state] ="usuario">
+         {{ usuario.displayName }} </ion-label>
     </ion-item>
+ 
+
   </ion-list>
-  </ion-content>
-  
+
+</ion-content>

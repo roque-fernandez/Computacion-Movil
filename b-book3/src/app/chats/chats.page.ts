@@ -3,6 +3,10 @@ import { userInfo } from 'os';
 import { UseExistingWebDriver } from 'protractor/built/driverProviders';
 import { Message } from '../shared/message.interface';
 import { ChatPage } from '../chat/chat.page';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map, switchMap } from "rxjs/operators";
 import { User } from '../shared/user.interface';
 import { DatabaseService } from '../services/database.service';
 import { getAuth } from 'firebase/auth';
@@ -13,21 +17,40 @@ import { getAuth } from 'firebase/auth';
   styleUrls: ['./chats.page.scss'],
 })
 export class ChatsPage implements OnInit {
-  user:User = null;
-  mensajes: Message[] = [];
-  usuarios: User[] = [];
+
+  currentUser:User = null;
+  messages: Observable<Message[]>;
+  usuarios: Observable<User[]>;
   private database: DatabaseService;
 
-  constructor() { 
-      this.user = getAuth().currentUser;
-      console.log("User en MAIN->",this.user);
-      console.log("Existe nombre ->",this.user.displayName != null);
+
+  
+
+  constructor(private router: Router, private afs: AngularFirestore) { 
+    this.currentUser = getAuth().currentUser;
+    
+
 
     }
 
   ngOnInit() {
-    
+    this.getChatUsers();
+    console.log(this.getChatUsers());
   }
+
+  //FUNCION PARA OBTENER LOS USUARIOS
+
+      getChatUsers(){
+        this.usuarios = this.afs.collection('users').valueChanges({ idField: 'uid'}) as Observable<User[]>;
+        return this.usuarios;
+      }
+
+
+
+
+
+
+
 
 
 }
