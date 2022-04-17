@@ -101,24 +101,28 @@
         [scrollEvents]="true"
         >
 
-        <ion-card *ngFor="let libro of librosBuscados">
-    
-          <ion-card-subtitle>{{libro.userDisplayName}}</ion-card-subtitle>
-          <img [src]= libro.imageURL width="30%" height="60%"/>
-          
-          <ion-card-header>
-            <ion-card-subtitle>Estado: {{libro.materialState}}</ion-card-subtitle>
-            <ion-card-title>{{libro.title}}</ion-card-title>
-          </ion-card-header>
-      
-          <ion-item>
-            <ion-button routerLink='/book-view' [state]=libro fill="clear" slot="end">
-              <ion-icon slot="icon-only" name="play"></ion-icon>
-            </ion-button>
-          </ion-item>
-      
-        </ion-card>
-          
+        <ion-grid>
+          <ion-row>
+            <ion-col sizeLg="4" sizeMd="4" sizeXs="6" *ngFor="let libro of librosBuscados">
+              <ion-card routerLink='/book-view' [state]=libro>
+                <img [src]= libro.imageURL />
+                <ion-card-header>
+                  <ion-card-title>{{libro.title}}</ion-card-title>
+                  <ion-card-subtitle><b>Estado:</b> {{libro.materialState}}</ion-card-subtitle>
+                  <ion-card-subtitle><b>Subido por:</b> {{libro.userDisplayName}}</ion-card-subtitle>
+                </ion-card-header>
+               
+                <ion-item>
+                  <ion-button routerLink='/book-view' [state]=libro fill="clear" slot="end">
+                    <ion-icon slot="icon-only" name="play"></ion-icon>
+                  </ion-button>
+                </ion-item>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+       
       </ion-content>
 
     </div>
