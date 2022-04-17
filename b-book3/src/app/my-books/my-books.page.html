@@ -18,7 +18,7 @@
   
   <ion-grid>
     <ion-row>
-      <ion-col sizeLg="4" sizeMd="4" sizeXs="6" *ngFor="let libro of misLibros">
+      <ion-col sizeLg="2" sizeMd="4" sizeXs="6" *ngFor="let libro of misLibros">
         <ion-card routerLink='/book-view' [state]=libro>
           <img [src]= libro.imageURL />
           <ion-card-header>

@@ -4,6 +4,9 @@ import { Book } from '../shared/book.interface';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../services/database.service';
 import { Subscription } from 'rxjs';
+import { getAuth} from "firebase/auth";
+
+
 
 @Component({
   selector: 'app-book-view',
@@ -20,11 +23,16 @@ export class BookViewPage implements OnInit {
   ownerName = null;
   description = "Sin descripción";
 
+  myUser:User = null;
+  myUserName = null;
+
   constructor(
     private router: Router,
-    private database: DatabaseService
+    private database: DatabaseService,
     ) { 
-    
+      this.myUser = getAuth().currentUser;
+      this.myUserName = this.myUser.displayName;
+
     }
 
   ngOnInit() {
@@ -44,6 +52,16 @@ export class BookViewPage implements OnInit {
         this.ownerName = this.owner.displayName;
         console.log(this.owner);
       }
+    });
+  }
+
+  //funcion que borra un libro del usuario
+  
+  async deleteBook(libro){
+    await this.database.delete("books",libro.uid).then(res => {
+      console.log("Libro borrado con éxito"); 
+    }).catch(err => {
+      console.log("Error al borrar libro: ", err);
     });
   }
 

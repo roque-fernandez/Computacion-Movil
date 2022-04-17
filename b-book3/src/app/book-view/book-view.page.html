@@ -33,7 +33,9 @@
 
   <ion-button color="success" expand="block" routerLink='/new-trade' [state]=book>Contactar con {{ownerName}}</ion-button>
   <ion-button color="secondary" expand="block" routerLink="/chat" [state]=book> Chatear con {{ownerName}} </ion-button>
-  
+  <ion-button color="secondary" expand="block" (click)="deleteBook(book)" [state]=book [disabled]="ownerName !== myUserName"> Eliminar este libro (Funciona, conviene revisar*)</ion-button>
+  <ion-button color="secondary" expand="block" routerLink="/chat" [state]=book> Editar libro (Falta) </ion-button>
+
 
 
 </ion-content>

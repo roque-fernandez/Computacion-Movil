@@ -103,7 +103,7 @@
 
         <ion-grid>
           <ion-row>
-            <ion-col sizeLg="4" sizeMd="4" sizeXs="6" *ngFor="let libro of librosBuscados">
+            <ion-col sizeLg="2" sizeMd="4" sizeXs="6" *ngFor="let libro of librosBuscados">
               <ion-card routerLink='/book-view' [state]=libro>
                 <img [src]= libro.imageURL />
                 <ion-card-header>
@@ -111,12 +111,6 @@
                   <ion-card-subtitle><b>Estado:</b> {{libro.materialState}}</ion-card-subtitle>
                   <ion-card-subtitle><b>Subido por:</b> {{libro.userDisplayName}}</ion-card-subtitle>
                 </ion-card-header>
-               
-                <ion-item>
-                  <ion-button routerLink='/book-view' [state]=libro fill="clear" slot="end">
-                    <ion-icon slot="icon-only" name="play"></ion-icon>
-                  </ion-button>
-                </ion-item>
               </ion-card>
             </ion-col>
           </ion-row>
