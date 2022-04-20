@@ -11,56 +11,6 @@
 
 <ion-content>
 
-  
-<!--
-  <ion-item>
-
-    <ion-label>Región</ion-label>
-    <ion-select (ionChange)="getSearch()" multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="region">
-      <ion-select-option value="Andalucía">Andalucía</ion-select-option>
-      <ion-select-option value="Aragón">Aragón</ion-select-option>
-      <ion-select-option value="Asturias">Asturias</ion-select-option>
-      <ion-select-option value="Cantabria">Cantabria</ion-select-option>
-      <ion-select-option value="Castilla - La Mancha">Castilla - La Mancha</ion-select-option>
-      <ion-select-option value="Castilla y León">Melilla</ion-select-option>
-      <ion-select-option value="Cataluña">Cataluña</ion-select-option>
-      <ion-select-option value="Ceuta">Ceuta</ion-select-option>
-      <ion-select-option value="Extremadura">Extremadura</ion-select-option>
-      <ion-select-option value="Galicia">Galicia</ion-select-option>
-      <ion-select-option value="Islas Baleares">Islas Baleares</ion-select-option>
-      <ion-select-option value="Islas Canarias">Islas Canarias</ion-select-option>
-      <ion-select-option value="La Rioja">La Rioja</ion-select-option>
-      <ion-select-option value="Madrid">Madrid</ion-select-option>
-      <ion-select-option value="Melilla">Melilla</ion-select-option>
-      <ion-select-option value="Murcia">Murcia</ion-select-option>
-      <ion-select-option value="Navarra">Navarra</ion-select-option>
-      <ion-select-option value="País Vasco">País Vasco</ion-select-option>
-      <ion-select-option value="Valencia">Valencia</ion-select-option>
-    </ion-select>
-  
-  </ion-item>
-
- 
-
-  <ion-item>
-    <ion-label>Categoría</ion-label>
-    <ion-select (ionChange)="getSearch()" multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="categoria">
-      <ion-select-option value="Novela">Novela</ion-select-option>
-      <ion-select-option value="Poesía">Poesía</ion-select-option>
-      <ion-select-option value="Teatro">Teatro</ion-select-option>
-      <ion-select-option value="Ensayo">Ensayo</ion-select-option>
-      <ion-select-option value="Revista">Revista</ion-select-option>
-      <ion-select-option value="Infantil">Infantil</ion-select-option>
-    </ion-select>
-  </ion-item>
-
-
-
--->
-
-  
-
-
   <ion-app>
 
     <ion-menu side="start" content-id="main-content" type="overlay">
@@ -98,7 +48,40 @@
 
     
     <div class="ion-page" id="main-content">  
+      <ion-item style="margin-bottom:20px;">
 
+        <ion-select (ionChange)="getSearch()" multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="region">
+          <ion-select-option value="Andalucía">Andalucía</ion-select-option>
+          <ion-select-option value="Aragón">Aragón</ion-select-option>
+          <ion-select-option value="Asturias">Asturias</ion-select-option>
+          <ion-select-option value="Cantabria">Cantabria</ion-select-option>
+          <ion-select-option value="Castilla - La Mancha">Castilla - La Mancha</ion-select-option>
+          <ion-select-option value="Castilla y León">Melilla</ion-select-option>
+          <ion-select-option value="Cataluña">Cataluña</ion-select-option>
+          <ion-select-option value="Ceuta">Ceuta</ion-select-option>
+          <ion-select-option value="Extremadura">Extremadura</ion-select-option>
+          <ion-select-option value="Galicia">Galicia</ion-select-option>
+          <ion-select-option value="Islas Baleares">Islas Baleares</ion-select-option>
+          <ion-select-option value="Islas Canarias">Islas Canarias</ion-select-option>
+          <ion-select-option value="La Rioja">La Rioja</ion-select-option>
+          <ion-select-option value="Madrid">Madrid</ion-select-option>
+          <ion-select-option value="Melilla">Melilla</ion-select-option>
+          <ion-select-option value="Murcia">Murcia</ion-select-option>
+          <ion-select-option value="Navarra">Navarra</ion-select-option>
+          <ion-select-option value="País Vasco">País Vasco</ion-select-option>
+          <ion-select-option value="Valencia">Valencia</ion-select-option>
+        </ion-select>
+      
+      
+        <ion-select (ionChange)="getSearch()" multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="categoria">
+          <ion-select-option value="Novela">Novela</ion-select-option>
+          <ion-select-option value="Poesía">Poesía</ion-select-option>
+          <ion-select-option value="Teatro">Teatro</ion-select-option>
+          <ion-select-option value="Ensayo">Ensayo</ion-select-option>
+          <ion-select-option value="Revista">Revista</ion-select-option>
+          <ion-select-option value="Infantil">Infantil</ion-select-option>
+        </ion-select>
+      </ion-item>
       <ion-content
         [scrollEvents]="true"
         >
