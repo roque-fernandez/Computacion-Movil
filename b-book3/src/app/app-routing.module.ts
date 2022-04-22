@@ -90,6 +90,14 @@ const routes: Routes = [
     path: 'new-chat',
     loadChildren: () => import('./new-chat/new-chat.module').then( m => m.NewChatPageModule)
   },
+  {
+    path: 'new-trade-chat',
+    loadChildren: () => import('./new-trade-chat/new-trade-chat.module').then( m => m.NewTradeChatPageModule)
+  },
+  {
+    path: 'edit-book',
+    loadChildren: () => import('./edit-book/edit-book.module').then( m => m.EditBookPageModule)
+  },
 
 
 

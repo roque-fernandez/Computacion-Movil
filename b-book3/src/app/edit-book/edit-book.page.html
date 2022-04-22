@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>
+      Edite datos de su libro
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    
+  <ion-item>
+    <ion-input type="title" placeholder="Título" [(ngModel)]="libro.title"></ion-input>
+  </ion-item>
+  
+  <ion-item>
+    <ion-input type="text" placeholder="Autor" [(ngModel)]="libro.author"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Categoría</ion-label>
+    <ion-select multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="libro.category">
+      <ion-select-option value="Novela">Novela</ion-select-option>
+      <ion-select-option value="Poesía">Poesía</ion-select-option>
+      <ion-select-option value="Teatro">Teatro</ion-select-option>
+      <ion-select-option value="Ensayo">Ensayo</ion-select-option>
+      <ion-select-option value="Revista">Revista</ion-select-option>
+      <ion-select-option value="Infantil">Infantil</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Estado</ion-label>
+    <ion-select multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="libro.materialState">
+      <ion-select-option value="Nuevo">Nuevo</ion-select-option>
+      <ion-select-option value="Muy bueno">Muy bueno</ion-select-option>
+      <ion-select-option value="Bueno">Bueno</ion-select-option>
+      <ion-select-option value="Desgastado">Desgastado</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Disponibilidad</ion-label>
+    <ion-select multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="libro.availability">
+      <ion-select-option value="Disponible">Disponible</ion-select-option>
+      <ion-select-option value="No disponible">No disponible</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-textarea rows="4" type="description" placeholder="Descripción" [(ngModel)]="libro.description">
+    </ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Región</ion-label>
+    <ion-select multiple="false" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="libro.region">
+      <ion-select-option value="Andalucía">Andalucía</ion-select-option>
+      <ion-select-option value="Aragón">Aragón</ion-select-option>
+      <ion-select-option value="Asturias">Asturias</ion-select-option>
+      <ion-select-option value="Cantabria">Cantabria</ion-select-option>
+      <ion-select-option value="Castilla - La Mancha">Castilla - La Mancha</ion-select-option>
+      <ion-select-option value="Castilla y León">Melilla</ion-select-option>
+      <ion-select-option value="Cataluña">Cataluña</ion-select-option>
+      <ion-select-option value="Ceuta">Ceuta</ion-select-option>
+      <ion-select-option value="Extremadura">Extremadura</ion-select-option>
+      <ion-select-option value="Galicia">Galicia</ion-select-option>
+      <ion-select-option value="Islas Baleares">Islas Baleares</ion-select-option>
+      <ion-select-option value="Islas Canarias">Islas Canarias</ion-select-option>
+      <ion-select-option value="La Rioja">La Rioja</ion-select-option>
+      <ion-select-option value="Madrid">Madrid</ion-select-option>
+      <ion-select-option value="Melilla">Melilla</ion-select-option>
+      <ion-select-option value="Murcia">Murcia</ion-select-option>
+      <ion-select-option value="Navarra">Navarra</ion-select-option>
+      <ion-select-option value="País Vasco">País Vasco</ion-select-option>
+      <ion-select-option value="Valencia">Valencia</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Foto</ion-label>
+    <ion-buttons slot="end">
+      <ion-button >
+        <label for="fileUpload">  
+          <ion-icon slot="icon-only" name="images"></ion-icon>
+        </label>
+        <input (change)="uploadBookPhoto($event)" id="fileUpload" style="display: none;" type="file" accept="image/*">
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+   
+  <ion-item >
+    <img [src]="newImage" width="75%" height="75%"> 
+  </ion-item>
+  
+  <ion-button (click)="uploadBook()" expand="block">Actualizar libro</ion-button>
+  
