@@ -98,6 +98,10 @@ const routes: Routes = [
     path: 'edit-book',
     loadChildren: () => import('./edit-book/edit-book.module').then( m => m.EditBookPageModule)
   },
+  {
+    path: 'other-profile',
+    loadChildren: () => import('./other-profile/other-profile.module').then( m => m.OtherProfilePageModule)
+  },
 
 
 

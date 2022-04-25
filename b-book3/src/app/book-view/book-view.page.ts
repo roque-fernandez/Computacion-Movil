@@ -23,6 +23,7 @@ export class BookViewPage implements OnInit {
   ownerName = null;
   description = "Sin descripción";
 
+
   myUser:User = null;
   myUserName = null;
 
