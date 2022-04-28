@@ -60,7 +60,8 @@ export class TradeRequestsPage implements OnInit {
         meet_point: '',
         loan_date: null,
         return_date: null,
-        state: ''
+        state: '',
+        flagUser1: null
       };
       
       //obtenemos los libros

@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { getAuth } from "firebase/auth";
 import { User } from '../shared/user.interface';
 import { Book } from '../shared/book.interface';
 import { Trade } from '../shared/trade.interface';
 import { Request } from '../shared/request.interface';
 import { DatabaseService } from '../services/database.service';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { getAuth } from "firebase/auth";
-
-
+import { ToastController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-trades',
-  templateUrl: './trades.page.html',
-  styleUrls: ['./trades.page.scss'],
+  selector: 'app-record',
+  templateUrl: './record.page.html',
+  styleUrls: ['./record.page.scss'],
 })
-export class TradesPage implements OnInit {
+export class RecordPage implements OnInit {
 
   user:User = null;
 
@@ -31,24 +31,26 @@ export class TradesPage implements OnInit {
 
   constructor(
     private database: DatabaseService,
-
+    private router: Router,
+    private toastController: ToastController
   ) { 
     this.user = getAuth().currentUser;
-    this.getTrades();
+    this.getRecord();
+    
   }
 
   ngOnInit() {
   }
 
-  async getTrades(){
-    this.tradeSubscriber = (await this.database.getTrades1(this.user.uid)).subscribe( res => {
+  async getRecord(){
+    this.tradeSubscriber = (await this.database.getRecord1(this.user.uid)).subscribe( res => {
       if(res.length){
         this.trades1 = res as Trade[];
         console.log("Trade1: ",this.trades1);
       }
     });
 
-    this.tradeSubscriber = (await this.database.getTrades2(this.user.uid)).subscribe( res => {
+    this.tradeSubscriber = (await this.database.getRecord2(this.user.uid)).subscribe( res => {
       if(res.length){
         this.trades2 = res as Trade[];
         console.log("Trade2: ",this.trades2);
@@ -106,6 +108,12 @@ export class TradesPage implements OnInit {
       request.return_date = trade.return_date;
       request.state = trade.state;
       request.uid = trade.uid;
+      if(trade.idUser1 === this.user.uid){
+        request.flagUser1 = true;
+      }
+      else{
+        request.flagUser1 = false;
+      }
       
 
       this.requests.push(request);
@@ -114,4 +122,51 @@ export class TradesPage implements OnInit {
     console.log("Se han obtenido las siguientes Requests: ",this.requests);
   }
 
+  
+  async acceptRequest(request){
+    var result = this.trades.filter(trade =>
+      trade.uid == request.uid
+    );
+    if(result.length > 0){
+      result[0].state = "Aceptado";
+
+      this.database.update('trades', result[0].uid ,  JSON.parse(this.tradeToJSON(result[0]))).then(res => {
+        this.presentToast("Solicitud de intercambio aceptada");
+        this.router.navigate(['trades']);
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+  }
+
+  async presentToast(content) {
+    const toast = await this.toastController.create({
+      message: content,
+      duration: 2000
+    });
+    toast.present();
+  }
+  
+
+  printTrades(){
+    console.log("TRADES ->",this.trades);
+  }
+
+  tradeToJSON(trade){
+    var res = '{ "uid": ' + '"' + trade.uid + '"' 
+    + ', "idUser1":'  + '"' + trade.idUser1 + '"' 
+    + ', "idUser2": ' + '"' + trade.idUser2 + '"' 
+    + ', "idBook1":' + '"' + trade.idBook1 + '"' 
+    + ', "idBook2":'  + '"' + trade.idBook2 + '"' 
+    + ', "meet_point":'  + '"' + trade.meet_point + '"'
+    + ', "loan_date":'  + '"' +  trade.loan_date + '"'
+    + ', "return_date":'  + '"' +  trade.return_date + '"'
+    + ', "state":'  + '"' + trade.state + '"'
+    + "}";
+    //console.log(res);
+    return res;
+  }
+
 }
+
+

@@ -112,6 +112,8 @@ export class DatabaseService {
     }
   }
 
+  //REQUESTS
+
   async getTradeRequests(user_id) {
     try {
       var date = new Date();
@@ -128,11 +130,13 @@ export class DatabaseService {
     }
   }
 
-  async getTrades(user_id) {
+  //TRADES
+
+  async getTrades1(user_id) {
     try {
       var date = new Date();
 
-      return await this.firestore.collection('trades', ref => ref.where('idUser2', '==', user_id).where('state','!=','Pendiente')).snapshotChanges().pipe(
+      return await this.firestore.collection('trades', ref => ref.where('idUser1', '==', user_id).where('state','in',['Aceptado','Finalizado1','Finalizado2'])).snapshotChanges().pipe(
         map(actions => actions.map(a => {
           const trade = a.payload.doc.data() as Trade;
           trade.uid = a.payload.doc.id;
@@ -140,7 +144,56 @@ export class DatabaseService {
         }))
       );
     } catch (error) {
-      console.log("error en: getCollectionById ", error)
+      console.log("error en: getRecord1 ", error)
+    }
+  }
+
+  async getTrades2(user_id) {
+    try {
+      var date = new Date();
+
+      return await this.firestore.collection('trades', ref => ref.where('idUser2', '==', user_id).where('state','in',['Aceptado','Finalizado1','Finalizado2'])).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const trade = a.payload.doc.data() as Trade;
+          trade.uid = a.payload.doc.id;
+          return trade;
+        }))
+      );
+    } catch (error) {
+      console.log("error en: getRecord1 ", error)
+    }
+  }
+
+  //HISTORIAL
+  async getRecord1(user_id) {
+    try {
+      var date = new Date();
+
+      return await this.firestore.collection('trades', ref => ref.where('idUser1', '==', user_id).where('state','in',['Cerrado','Incidencia'])).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const trade = a.payload.doc.data() as Trade;
+          trade.uid = a.payload.doc.id;
+          return trade;
+        }))
+      );
+    } catch (error) {
+      console.log("error en: getRecord1 ", error)
+    }
+  }
+
+  async getRecord2(user_id) {
+    try {
+      var date = new Date();
+
+      return await this.firestore.collection('trades', ref => ref.where('idUser2', '==', user_id).where('state','in',['Cerrado','Incidencia'])).snapshotChanges().pipe(
+        map(actions => actions.map(a => {
+          const trade = a.payload.doc.data() as Trade;
+          trade.uid = a.payload.doc.id;
+          return trade;
+        }))
+      );
+    } catch (error) {
+      console.log("error en: getRecord1 ", error)
     }
   }
 

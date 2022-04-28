@@ -102,6 +102,10 @@ const routes: Routes = [
     path: 'other-profile',
     loadChildren: () => import('./other-profile/other-profile.module').then( m => m.OtherProfilePageModule)
   },
+  {
+    path: 'record',
+    loadChildren: () => import('./record/record.module').then( m => m.RecordPageModule)
+  },
 
 
 
