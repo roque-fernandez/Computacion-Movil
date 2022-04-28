@@ -15,15 +15,26 @@
 
   <ion-card *ngFor="let request of requests">
 
-    <ion-card-header>
-      <ion-card-title>{{request.user1.displayName}} me ofrece: {{request.book1.title}}</ion-card-title>
-      <ion-card-title>Yo doy {{request.book2.title}}</ion-card-title>
-    </ion-card-header>
+    <div *ngIf="user.uid == request.user2.uid">
+      <ion-card-title>{{request.user1.displayName}} me cambió {{request.book1.title}}</ion-card-title>
+      <ion-card-title>por {{request.book2.title}}</ion-card-title>
+    </div>
+
+    <div *ngIf="user.uid == request.user1.uid">
+      <ion-card-title>{{request.user2.displayName}} me cambió {{request.book2.title}}</ion-card-title>
+      <ion-card-title>por {{request.book1.title}}</ion-card-title>
+    </div>
     
     <ion-card-subtitle>En {{request.meet_point}} el {{request.loan_date}}</ion-card-subtitle>
     <ion-card-subtitle>Devolución: {{request.return_date}}</ion-card-subtitle>
 
-    <img [src]= request.book1.imageURL width="30%" height="60%"/>
+    <div *ngIf="user.uid == request.user1.uid">
+      <img [src]= request.book2.imageURL width="30%" height="60%"/>
+    </div>
+
+    <div *ngIf="user.uid == request.user2.uid">
+      <img [src]= request.book1.imageURL width="30%" height="60%"/>
+    </div>
     
     <ion-card-subtitle>Estado: {{request.state}}</ion-card-subtitle>
 

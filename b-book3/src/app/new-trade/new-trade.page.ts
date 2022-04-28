@@ -74,12 +74,6 @@ export class NewTradePage implements OnInit {
       this.database.create('trades', this.trade).then(res => {
         console.log("Exito en alta de intercambio");
 
-        //se modifica de los dos libros a prestado
-        this.mySelectedBook.availability = "Prestado";
-        this.updateBook(this.mySelectedBook);
-        this.otherUserBook.availability = "Prestado";
-        this.updateBook(this.otherUserBook);
-
         this.router.navigate(['main']);
 
       }).catch(err => {

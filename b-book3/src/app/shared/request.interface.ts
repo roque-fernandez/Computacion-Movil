@@ -11,6 +11,4 @@ export interface Request {
     loan_date: Date;
     return_date: Date;
     state: string;
-    //variable que indica si el user1 es el usuario logeado en la app
-    flagUser1: boolean;
 }

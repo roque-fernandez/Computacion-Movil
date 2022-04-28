@@ -23,13 +23,19 @@
     <ion-card-subtitle>En {{request.meet_point}} el {{request.loan_date}}</ion-card-subtitle>
     <ion-card-subtitle>Devolución: {{request.return_date}}</ion-card-subtitle>
 
-    <img [src]= request.book1.imageURL width="30%" height="60%"/>
+    <div *ngIf="user.uid == request.user1.uid">
+      <img [src]= request.book2.imageURL width="30%" height="60%"/>
+    </div>
+
+    <div *ngIf="user.uid == request.user2.uid">
+      <img [src]= request.book1.imageURL width="30%" height="60%"/>
+    </div>
     
     
 
     <ion-item>
-      <ion-button (click)="acceptRequest(request)" fill="clear" slot="end">
-        <ion-icon slot="icon-only" name="checkmark-circle"></ion-icon>
+      <ion-button  size="small" color="tertiary" style="float:center" (click)="acceptRequest(request)">
+        Aceptar intercambio
       </ion-button>
     </ion-item>
 

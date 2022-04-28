@@ -47,6 +47,9 @@ export class RecordPage implements OnInit {
       if(res.length){
         this.trades1 = res as Trade[];
         console.log("Trade1: ",this.trades1);
+        this.trades = this.trades1.concat(this.trades2);
+        console.log("Se ha obtenido el siguiente historial: ",this.trades);
+        this.getRequests();
       }
     });
 
@@ -74,7 +77,6 @@ export class RecordPage implements OnInit {
         loan_date: null,
         return_date: null,
         state: '',
-        flagUser1: null
       };
       
       //obtenemos los libros
@@ -108,14 +110,7 @@ export class RecordPage implements OnInit {
       request.return_date = trade.return_date;
       request.state = trade.state;
       request.uid = trade.uid;
-      if(trade.idUser1 === this.user.uid){
-        request.flagUser1 = true;
-      }
-      else{
-        request.flagUser1 = false;
-      }
       
-
       this.requests.push(request);
       
     });

@@ -60,8 +60,7 @@ export class TradeRequestsPage implements OnInit {
         meet_point: '',
         loan_date: null,
         return_date: null,
-        state: '',
-        flagUser1: null
+        state: ''
       };
       
       //obtenemos los libros
@@ -111,6 +110,12 @@ export class TradeRequestsPage implements OnInit {
     if(result.length > 0){
       result[0].state = "Aceptado";
 
+      //se modifica de los dos libros a disponible (inicia el intercambio)
+      request.book1.availability = "Prestado";
+      this.updateBook(request.book1);
+      request.book2.availability = "Prestado";
+      this.updateBook(request.book2);
+
       this.database.update('trades', result[0].uid ,  JSON.parse(this.tradeToJSON(result[0]))).then(res => {
         this.presentToast("Solicitud de intercambio aceptada");
         this.router.navigate(['trades']);
@@ -145,6 +150,30 @@ export class TradeRequestsPage implements OnInit {
     + ', "state":'  + '"' + trade.state + '"'
     + "}";
     //console.log(res);
+    return res;
+  }
+
+  async updateBook(book:Book){
+    this.database.update('books', book.uid ,  JSON.parse(this.bookToJSON(book))).then(res => {
+      console.log("Exito actualizando libro");
+    }).catch(err => {
+      console.log("Fallo actualizando libro");
+    });
+  }
+
+  bookToJSON(book:Book){
+    var res = '{ "uid": ' + '"' + book.uid + '"' 
+    + ', "userId":'  + '"' + book.userId + '"' 
+    + ', "userDisplayName": ' + '"' + book.userDisplayName + '"' 
+    + ', "title":' + '"' + book.title + '"' 
+    + ', "author":'  + '"' + book.author + '"' 
+    + ', "description":'  + '"' + book.description + '"'
+    + ', "imageURL":'  + '"' + book.imageURL + '"'
+    + ', "category":'  + '"' + book.category + '"'
+    + ', "region":'  + '"' + book.region + '"'
+    + ', "availability":'  + '"' + book.availability + '"'
+    + ', "materialState":'  + '"' + book.materialState + '"'
+    + "}";
     return res;
   }
 

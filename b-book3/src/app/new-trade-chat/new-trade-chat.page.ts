@@ -77,13 +77,6 @@ export class NewTradeChatPage implements OnInit {
       //se crea la entrada en la tabla de trades
       this.database.create('trades', this.trade).then(res => {
         console.log("Exito en alta de intercambio");
-
-        //se modifica de los dos libros a prestado
-        this.mySelectedBook.availability = "Prestado";
-        this.updateBook(this.mySelectedBook);
-        this.otherUserSelectedBook.availability = "Prestado";
-        this.updateBook(this.otherUserSelectedBook);
-
         this.router.navigate(['main']);
 
       }).catch(err => {
