@@ -1,4 +1,16 @@
-# Computacion-Movil
+# BBook
+
+Funcionalidades disponibles:
+
+1. Creación de cuenta y login con correo electrónico
+2. Modificación de contraseña y verificación de la cuenta mediante el envío de un correo electrónico
+3. Modificación de información del perfil
+4. Subida y modificación de libros para intercambiar
+5. Servicio de búsqueda de libros disponibles filtrando por región y tipo de libro
+6. Mecanismo de intercambio de libros
+7. Chat con otros usuarios
+8. Posibilidad de ver el estado de un intercambio en cualquier momento
+9. Posibilidad de ver el perfil de otros usuarios
 
 Mecanismo de intercambio:
 
