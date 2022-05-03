@@ -19,6 +19,7 @@ import { getAuth } from 'firebase/auth';
 export class ChatsPage implements OnInit {
 
   currentUser:User = null;
+  currentUserId: String;
   messages: Observable<Message[]>;
   usuarios: Observable<User[]>;
   private database: DatabaseService;
@@ -28,28 +29,46 @@ export class ChatsPage implements OnInit {
 
   constructor(private router: Router, private afs: AngularFirestore) { 
     this.currentUser = getAuth().currentUser;
+    this.currentUserId = this.currentUser.uid;
     
 
 
     }
 
   ngOnInit() {
-    this.getChatUsers();
-    console.log(this.getChatUsers());
+    this.usuarios = this.getChatUsers(this.currentUserId);
+    console.log('b: ',this.usuarios);
+    console.log(this.currentUserId);
   }
 
   //FUNCION PARA OBTENER LOS USUARIOS
 
-      getChatUsers(){
-        this.usuarios = this.afs.collection('users').valueChanges({ idField: 'uid'}) as Observable<User[]>;
-        return this.usuarios;
+      getUsers(){
+        return this.afs.collection('users').valueChanges({ idField: 'uid'}) as Observable<User[]>;
       }
 
 
-
-
-
-
+      getChatUsers(currentUserId) {
+        let users = [];
+        let usuarios = [];
+        return this.getUsers().pipe(
+            switchMap(res => {
+                users = res;
+                return this.afs.collection('messages', ref => ref.orderBy('createdAt')).valueChanges({ idField : 'id' }) as Observable<Message[]>
+            }),
+            map(messages => {
+              messages.filter((m) => (m.from == currentUserId) || (m.to == currentUserId))
+              for (let index = 0; index < messages.length; index++) {
+                if(messages[index].from == currentUserId){
+                  usuarios.push(messages[index].to);
+                }else if(messages[index].to == currentUserId){
+                  usuarios.push(messages[index].from);
+                }
+              }
+              return users.filter((us) => usuarios.includes(us.uid));
+            })
+        )
+      }
 
 
 

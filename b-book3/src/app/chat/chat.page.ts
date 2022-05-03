@@ -22,6 +22,7 @@ export class ChatPage implements OnInit {
   newMsg = '';
 
   currentUser: User = null;
+  otherUserName = null;
 
   otherUserId = null;
 
@@ -29,6 +30,7 @@ export class ChatPage implements OnInit {
     const routerState = this.router.getCurrentNavigation().extras.state;
     console.log(routerState.userId);
     this.currentUser = getAuth().currentUser;
+    this.otherUserName = routerState.displayName;
     this.otherUserId = routerState.userId || routerState.uid;
     console.log(this.otherUserId);
   }
