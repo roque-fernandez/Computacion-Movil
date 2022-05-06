@@ -1,7 +1,0 @@
-{
-  "name": "BBook",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
