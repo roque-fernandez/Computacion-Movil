@@ -1,3 +1,10 @@
+<style>
+  img {
+    height: 320px;
+    object-fit: cover;
+}
+</style>
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -13,31 +20,24 @@
   <ion-button (click)="getRequests()" expand="block">obtener requests</ion-button>
   --> 
 
-  <ion-card *ngFor="let request of requests">
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let request of requests">
+        <ion-card>
+         <img [src]= request.book1.imageURL width="50%" />
+          <img [src]= request.book2.imageURL width="50%" />
+          <ion-card-header>
+            <ion-card-title style="font-size: 20px; margin-bottom: 10px">{{request.book1.title}} <ion-icon name="refresh-outline"></ion-icon> {{request.book2.title}}</ion-card-title>
+            <ion-card-subtitle><ion-badge color="primary" class="centrar">Estado: {{request.state}}</ion-badge></ion-card-subtitle>
+            <ion-card-subtitle>En {{request.meet_point}} el {{request.loan_date}}</ion-card-subtitle>
+            <ion-card-subtitle><b>Devolución:</b> {{request.return_date}}</ion-card-subtitle>
+            <ion-card-subtitle><b>Cambiado por: </b>{{request.user1.displayName}}</ion-card-subtitle>
+          </ion-card-header>
 
-    <div *ngIf="user.uid == request.user2.uid">
-      <ion-card-title>{{request.user1.displayName}} me cambió {{request.book1.title}}</ion-card-title>
-      <ion-card-title>por {{request.book2.title}}</ion-card-title>
-    </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    <div *ngIf="user.uid == request.user1.uid">
-      <ion-card-title>{{request.user2.displayName}} me cambió {{request.book2.title}}</ion-card-title>
-      <ion-card-title>por {{request.book1.title}}</ion-card-title>
-    </div>
-    
-    <ion-card-subtitle>En {{request.meet_point}} el {{request.loan_date}}</ion-card-subtitle>
-    <ion-card-subtitle>Devolución: {{request.return_date}}</ion-card-subtitle>
-
-    <div *ngIf="user.uid == request.user1.uid">
-      <img [src]= request.book2.imageURL width="30%" height="60%"/>
-    </div>
-
-    <div *ngIf="user.uid == request.user2.uid">
-      <img [src]= request.book1.imageURL width="30%" height="60%"/>
-    </div>
-    
-    <ion-card-subtitle>Estado: {{request.state}}</ion-card-subtitle>
-
-  </ion-card>
 
 </ion-content>
