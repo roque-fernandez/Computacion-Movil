@@ -1,3 +1,10 @@
+<style>
+  img {
+    height: 320px;
+    object-fit: cover;
+}
+</style>
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -13,32 +20,31 @@
   <ion-button (click)="getRequests()" expand="block">obtener requests</ion-button>
   --> 
 
-  <ion-card *ngFor="let request of requests">
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let request of requests">
+        <ion-card>
+         <img [src]= request.book1.imageURL width="50%" />
+          <img [src]= request.book2.imageURL width="50%" />
+          <ion-card-header>
 
-    <ion-card-header>
-      <ion-card-title>{{request.user1.displayName}} me ofrece: {{request.book1.title}}</ion-card-title>
-      <ion-card-title>Yo doy {{request.book2.title}}</ion-card-title>
+            <ion-card-title style="font-size: 20px; margin-bottom: 10px">{{request.book1.title}} <ion-icon name="refresh-outline"></ion-icon> {{request.book2.title}}</ion-card-title>
+
+      <ion-card-subtitle><b>Cambio ofrecido por: </b>{{request.user1.displayName}}</ion-card-subtitle>
+      <ion-card-subtitle>En {{request.meet_point}} el {{request.loan_date}}</ion-card-subtitle>
+      <ion-card-subtitle><b>Devolución: </b>{{request.return_date}}</ion-card-subtitle>
     </ion-card-header>
-    
-    <ion-card-subtitle>En {{request.meet_point}} el {{request.loan_date}}</ion-card-subtitle>
-    <ion-card-subtitle>Devolución: {{request.return_date}}</ion-card-subtitle>
-
-    <div *ngIf="user.uid == request.user1.uid">
-      <img [src]= request.book2.imageURL width="30%" height="60%"/>
-    </div>
-
-    <div *ngIf="user.uid == request.user2.uid">
-      <img [src]= request.book1.imageURL width="30%" height="60%"/>
-    </div>
-    
     
 
     <ion-item>
-      <ion-button  size="small" color="tertiary" style="float:center" (click)="acceptRequest(request)">
+      <ion-button size="small" color="dark" style="text-align:center" (click)="acceptRequest(request)">
         Aceptar intercambio
       </ion-button>
     </ion-item>
 
   </ion-card>
+  </ion-col>
+  </ion-row>
+  </ion-grid>
 
 </ion-content>
