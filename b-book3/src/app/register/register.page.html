@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Register User</ion-title>
+    <ion-title>Crear cuenta</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,20 +14,20 @@
       <ion-input type="text" #email required></ion-input>
     </ion-item>
     <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
+      <ion-label position="floating">Clave</ion-label>
       <ion-input type="password" #password required></ion-input>
     </ion-item>
     <ion-row>
       <ion-col>
-        <ion-button type="submit" (click)="onRegister(email, password)" expand="block">Register</ion-button>
+        <ion-button type="submit" (click)="onRegister(email, password)" expand="block">Registrarse</ion-button>
       </ion-col>
     </ion-row>
   </form>
   <ion-row>
     <ion-col>
-      <p>
-        <a routerLink="/login">Already have an account? </a>
-      </p>
+      <center><p>
+        <a style="color:#fff" routerLink="/login">¿Ya tienes una cuenta?</a>
+      </p></center>
     </ion-col>
   </ion-row>
 </ion-content>

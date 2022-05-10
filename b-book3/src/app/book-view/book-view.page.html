@@ -30,7 +30,7 @@
       Estado: {{book.materialState}}
     </ion-text> 
   </ion-item>
-
+<br>
   <ion-button color="success" expand="block" routerLink='/new-trade' [state]=book [disabled]="ownerName === myUserName">Contactar con {{ownerName}}</ion-button>
   <ion-button color="secondary" expand="block" routerLink="/chat" [state]=book [disabled]="ownerName === myUserName"> Chatear con {{ownerName}} </ion-button>
   <ion-button color="danger" expand="block" (click)="deleteBook(book)" [state]=book [disabled]="ownerName !== myUserName"> Eliminar libro</ion-button>

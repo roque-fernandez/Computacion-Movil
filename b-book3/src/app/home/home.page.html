@@ -1,17 +1,8 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      B-Book
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-
-
 <ion-content class="auth-form">
   <ion-grid class="wrapper">
     <ion-row>
       <div class="bienvenido">
+        <center><img src="../assets/img/logo.png" height="85px" width="auto"></center>
       <h3>¡Bienvenido!</h3>
       </div>
     </ion-row>
@@ -20,7 +11,7 @@
         <ion-button [routerLink]="['/register']" expand="block" color="primary">Registrate</ion-button>
         <span class="divider line one-line">o</span>
         <span class="already">¿Ya eres usuario?</span>
-        <ion-button [routerLink]="['/login']" expand="block" color="danger">Inicia Sesión</ion-button>
+        <ion-button [routerLink]="['/login']" expand="block" color="success">Inicia Sesión</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
