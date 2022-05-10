@@ -1,20 +1,22 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="light">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title> <p style="float: left;margin-top: 8px;margin-bottom: 7px;"> {{ otherUserName || "Chat"  }}</p></ion-title>
-    <ion-button size="small" color="tertiary" style="float:center" routerLink='/other-profile' [state]=otherUserId>Perfil</ion-button>
-    <ion-button size="small" color="tertiary" style="float:right" routerLink='/new-trade-chat' [state]=otherUserId>Intercambio</ion-button>
+    <ion-title routerLink='/other-profile' [state]=otherUserId>  <p style="float: left;margin-top: 8px;margin-bottom: 7px;"> {{ otherUserName || "Chat"  }}</p></ion-title>
   </ion-toolbar>
+  <ion-item style="text-align: center;">
+    <p style="text-align: center;"><a style="text-decoration: none; color:white" routerLink='/new-trade-chat' [state]=otherUserId>Solicitar intercambio</a> | <a style="text-decoration: none; color:white" routerLink='/other-profile' [state]=otherUserId>Ver perfil</a></p> 
+  </ion-item>
 </ion-header>
 
 <ion-content class="ion-padding">
+ 
 <ion-grid>
   <ion-row *ngFor="let message of messages | async">
     <ion-col size="9" class="message" [offset]="message.myMsg ? 3 : 0"
     [ngClass]="{ 'my-message': message.myMsg, 'other-message': !message.myMsg}">
-    <b>{{ message.fromName }}</b><br>
+    <b>{{ message.fromName }}: </b>
     <span>{{ message.msg }}
     </span>
     <div class="time ion-text-right"><br>{{ message.createdAt?.toMillis() | date:'short' }}</div>
@@ -28,7 +30,7 @@
   <ion-toolbar color="light">
     <ion-row class="ion-align-items-center">
       <ion-col size="10">
-        <ion-textarea autoGrow="true" class="message-input" rows="1" maxLength="500" [(ngModel)]="newMsg" >
+        <ion-textarea style="color:black" autoGrow="true" class="message-input" rows="1" maxLength="500" [(ngModel)]="newMsg" >
         </ion-textarea>
       </ion-col>
       <ion-col size="2">
