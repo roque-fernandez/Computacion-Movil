@@ -20,4 +20,4 @@ Mecanismo de intercambio:
 4. Cuando queden los dos usuarios para devolverse los libros uno de los dos tendrá que finalizar el intercambio desde "Intercambios". El otro usuario podrá ahora aceptar el fin del intercambio (el intercambio ha ido bien y las dos partes están conformes) o podrá marcar que ha habido una incidencia (el intercambio ha tenido algún tipo de problema).
 5. En cualquiera de los dos casos la información del intercambio acabado se mostrará en el apartado "Historial"
 
-APK: Computacion-Movil\b-book3\android\app\build\outputs\apk\debug
+(APK para android 9.0 o superior)
